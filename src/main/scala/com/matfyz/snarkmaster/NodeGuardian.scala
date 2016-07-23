@@ -2,12 +2,14 @@ package com.matfyz.snarkmaster
 
 import akka.actor.{Actor, Props}
 import akka.actor.Actor.Receive
+import akka.event.LoggingReceive
+import com.matfyz.snarkmaster.model.graph.GraphFileSelected
 import com.matfyz.snarkmaster.ui.UIActor
 
 class NodeGuardian extends Actor{
   val uiActor = context.actorOf(Props(new UIActor(self)), UIActor.name)
 
-  override def receive: Receive = {
+  override def receive: Receive = LoggingReceive {
     case _ =>
   }
 

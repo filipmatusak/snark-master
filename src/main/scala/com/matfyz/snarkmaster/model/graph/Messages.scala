@@ -1,7 +1,9 @@
 package com.matfyz.snarkmaster.model.graph
 
-import scala.reflect.io.File
+import java.io.File
 
-object Messages {
-  case class GraphFileSelectes(file: File)
-}
+sealed trait Message
+
+sealed trait FrameMessage extends Message
+case class GraphFileSelected(file: File) extends FrameMessage
+
