@@ -1,0 +1,47 @@
+group 'SnarkMaster'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+apply plugin: "scala"
+
+sourceCompatibility = 1.5
+
+repositories {
+    mavenCentral()
+}
+
+sourceSets {
+    main {
+        scala {
+            srcDirs = ['src/main/scala']
+        }
+    }
+    test {
+        scala {
+            srcDirs = ['src/test/scala']
+        }
+    }
+}
+
+dependencies {
+    def scalaVersion = "2.11"
+    def akkaVersion = "2.3.14"
+
+
+    compile "org.scala-lang:scala-library:$scalaVersion.6"
+    compile "com.storm-enroute:scalameter-core_$scalaVersion:0.7"
+
+    compile "com.typesafe.akka:akka-actor_$scalaVersion:$akkaVersion"
+    compile "com.typesafe.akka:akka-cluster_$scalaVersion:$akkaVersion"
+
+
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+
+}
+
+tasks.withType(ScalaCompile) {
+    configure(scalaCompileOptions.forkOptions) {
+        memoryMaximumSize = '1g'
+        jvmArgs = ['-XX:MaxPermSize=512m']
+    }
+}

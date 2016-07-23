@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: com.storm-enroute:scalameter-core_2.11:0.7">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.storm-enroute/scalameter-core_2.11/0.7/72d014d05f636f27d5ea70d8c4fd7d0ba699450a/scalameter-core_2.11-0.7.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.storm-enroute/scalameter-core_2.11/0.7/f01cc5900b50f782d76a43c5dbb61cdbf6457352/scalameter-core_2.11-0.7-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
