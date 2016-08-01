@@ -1,7 +1,7 @@
 package com.matfyz.snarkmaster.ui
 
 import akka.actor.{Actor, ActorRef, Props}
-import com.matfyz.snarkmaster.model.graph.GraphFileSelected
+import com.matfyz.snarkmaster.model.GraphFileSelected
 
 class UIActor(listener: ActorRef) extends Actor{
 

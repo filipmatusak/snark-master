@@ -5,7 +5,7 @@ import java.awt.event.{ActionEvent, ActionListener}
 import javax.swing._
 
 import akka.actor.{Actor, ActorRef}
-import com.matfyz.snarkmaster.model.graph._
+import com.matfyz.snarkmaster.model.GraphFileSelected
 
 class FrameActor(uiActor: ActorRef) extends JFrame("SnarkMaster\u2122") with Actor{
   val frame = this

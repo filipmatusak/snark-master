@@ -1,4 +1,4 @@
-package com.matfyz.snarkmaster.model.graph
+package com.matfyz.snarkmaster.model
 
 import java.io.File
 
