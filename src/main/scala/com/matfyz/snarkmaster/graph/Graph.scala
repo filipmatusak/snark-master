@@ -25,3 +25,7 @@ case class Vertex(id: Int)
 
 case class Edge(u: Vertex, v: Vertex)
 
+object Graph{
+  def apply(edges: (Int, Int)*) = {}
+}
+
