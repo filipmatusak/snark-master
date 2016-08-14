@@ -10,21 +10,18 @@ object SimpleTripleFormat extends GraphFileFormat{
     val numberOfGraphs = in.next()
 
     for(graphNumber <- 0 until numberOfGraphs) yield {
-      val graph = new Graph
-
       in.next() // graph number
       val numberOfVertices = in.next
-
-      (0 until numberOfVertices).foreach(graph.addVertex)
 
       in.take(numberOfVertices * 3)
         .sliding(3, 3)
         .zipWithIndex
-        .foreach{ case (n, v) =>
-          n.foreach(graph.addEdge(v, _))
+        .flatMap{ case (n, v) => n.map((v, _))}
+        .foldLeft(new Graph){case (g, (u, v)) =>
+          g.addVertex(u, false)
+            .addVertex(v, false)
+            .addBidirectionalEdge(u, v, false)
         }
-
-      graph
     }
   }
 }

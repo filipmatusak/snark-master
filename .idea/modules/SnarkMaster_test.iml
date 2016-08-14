@@ -11,6 +11,15 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="SnarkMaster_main" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../cafesat_2.11-0.01.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
     <orderEntry type="library" name="Gradle: org.scala-lang:scala-library:2.11.6" level="project" />
     <orderEntry type="library" name="Gradle: com.storm-enroute:scalameter-core_2.11:0.7" level="project" />
     <orderEntry type="library" name="Gradle: com.typesafe.akka:akka-actor_2.11:2.3.14" level="project" />

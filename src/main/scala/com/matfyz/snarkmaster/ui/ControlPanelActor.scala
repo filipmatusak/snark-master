@@ -1,49 +1,56 @@
 package com.matfyz.snarkmaster.ui
 
-import java.awt.BorderLayout
 import java.awt.event.{ActionEvent, ActionListener}
 import javax.swing._
 
 import akka.actor.{Actor, ActorRef}
-import com.matfyz.snarkmaster.model.GraphFileSelected
+import akka.event.LoggingReceive
+import com.matfyz.snarkmaster.model._
 
-class FrameActor(uiActor: ActorRef) extends JFrame("SnarkMaster\u2122") with Actor{
-  val frame = this
-
-  setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE)
-  setSize(1024, 600)
-  setLayout(new BorderLayout)
-
+class ControlPanelActor(uiActor: ActorRef,
+                        frame: JFrame) extends Actor{
 
   val graphInputPanel = new JPanel()
   val graphInputName = new JLabel()
   val graphInputButton = new JButton("Open")
 
   val fileChooser = new JFileChooser()
+  val testStartButton = new JButton("Start Test")
+
   fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY)
 
   graphInputPanel.add(new JLabel("Graph: "))
   graphInputPanel.add(graphInputName)
   graphInputPanel.add(graphInputButton)
+  graphInputPanel.add(testStartButton)
 
   graphInputButton.addActionListener(new ActionListener {
     override def actionPerformed(e: ActionEvent): Unit = {
       fileChooser.showOpenDialog(frame)
       graphInputName.setText("Loading")
 
-      uiActor ! GraphFileSelected(fileChooser.getSelectedFile)
+      if(fileChooser.getSelectedFile != null)
+        uiActor ! GraphFileSelected(fileChooser.getSelectedFile)
     }
   })
 
-  add(graphInputPanel)
+  testStartButton.addActionListener(new ActionListener {
+    override def actionPerformed(e: ActionEvent): Unit = uiActor ! StartTestGraphs
+  })
 
+  frame.add(graphInputPanel)
+  uiActor ! FrameInitialized
+//  frame.setVisible(true)
 
-  setVisible(true)
-  override def receive: Receive = ???
+  override def receive: Receive = LoggingReceive {
+    case ParsedGraphs(_, file) => graphInputName.setText(file.getName)
+    case _ =>
+  }
 }
 
-object FrameActor{
-  val name = "frame"
+
+object ControlPanelActor{
+  val name = "control-panel"
 }
 
 

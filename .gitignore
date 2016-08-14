@@ -6,6 +6,8 @@
 *.xml
 *.iml
 
+.idea
+
 # sbt specific
 .cache
 .history

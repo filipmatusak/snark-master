@@ -8,5 +8,10 @@
         <parameter value="-target:jvm-1.5" />
       </parameters>
     </profile>
+    <profile name="SBT 2" modules="scala-smtlib,root">
+      <option name="deprecationWarnings" value="true" />
+      <option name="uncheckedWarnings" value="true" />
+      <option name="featureWarnings" value="true" />
+    </profile>
   </component>
 </project>
