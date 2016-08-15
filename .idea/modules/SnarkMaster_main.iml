@@ -13,7 +13,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../cafesat_2.11-0.01.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../lib/cafesat_2.11-0.01.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>

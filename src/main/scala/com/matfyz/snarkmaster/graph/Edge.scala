@@ -1,8 +1,7 @@
 package com.matfyz.snarkmaster.graph
 
-sealed trait Edge
-case class BidirectionalEdge(vertices: Set[Vertex]) extends Edge
+case class Edge(vertices: Set[Vertex])
 
-object BidirectionalEdge{
-  def apply(u: Vertex, v: Vertex): BidirectionalEdge = BidirectionalEdge(Set(u, v))
+object Edge{
+  def apply(u: Vertex, v: Vertex): Edge = Edge(Set(u, v))
 }

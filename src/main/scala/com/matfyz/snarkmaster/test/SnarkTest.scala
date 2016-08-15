@@ -1,7 +1,7 @@
 package com.matfyz.snarkmaster.test
 
 import com.matfyz.snarkmaster.configuration.Configuration
-import com.matfyz.snarkmaster.graph.Graph
+import com.matfyz.snarkmaster.graph.{Edge, Graph}
 import com.matfyz.snarkmaster.model.Coloring
 
 
@@ -17,6 +17,6 @@ trait SnarkColoringTest extends SnarkTest{
 
 trait SnarkTestResult
 case object WithoutColoring extends SnarkTestResult
-case class ColoringExists(coloring: Coloring) extends SnarkTestResult
+case class ColoringExists(coloring: Seq[(Int, Int , Int)]) extends SnarkTestResult
 
 

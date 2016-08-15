@@ -16,10 +16,10 @@ case class Graph(vertices: Map[Int, Vertex] = Map(),
   def addBidirectionalEdge(uId: Int, vId: Int, failIfExists: Boolean = false): Graph = {
     (vertices.get(uId), vertices.get(vId)) match {
       case (Some(u), Some(v)) =>
-        if(edges.contains(BidirectionalEdge(u, v)))
+        if(edges.contains(Edge(u, v)))
           if(failIfExists) throw new SnarkMasterException("Bidirectional edge already exist")
           else this
-        else Graph(vertices, edges + BidirectionalEdge(u, v))
+        else Graph(vertices, edges + Edge(u, v))
       case _ => throw new SnarkMasterException("Vertex doesn't exist")
     }
   }
@@ -27,7 +27,7 @@ case class Graph(vertices: Map[Int, Vertex] = Map(),
   def getSize = vertices.size
 
   def areNeighbour(u: Int, v: Int): Boolean = {
-    edges.contains(BidirectionalEdge(vertices(u), vertices(v)))
+    edges.contains(Edge(vertices(u), vertices(v)))
   }
 }
 

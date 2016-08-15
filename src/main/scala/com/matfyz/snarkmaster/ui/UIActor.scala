@@ -13,11 +13,10 @@ class UIActor(listener: ActorRef)extends JFrame("SnarkMaster\u2122") with Actor{
 
   val frame = context.actorOf(Props(new ControlPanelActor(self, this.asInstanceOf[JFrame])), ControlPanelActor.name)
 
-
   var graphs: Seq[Graph] = Nil
 
   setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE)
-  setSize(1024, 600)
+  setSize(600, 300)
   setLayout(new BorderLayout)
 
   override def receive: Receive = LoggingReceive {

@@ -1,7 +1,7 @@
 package com.matfyz.snarkmaster.test
 
 import com.matfyz.snarkmaster.configuration.Configuration
-import com.matfyz.snarkmaster.graph.Graph
+import com.matfyz.snarkmaster.graph.{Edge, Graph}
 import cafesat.api.FormulaBuilder._
 import cafesat.api.Formulas.PropVar
 import cafesat.api.Solver._
@@ -17,23 +17,37 @@ object SATColoringTest extends SnarkColoringTest{
       else Nil
     })
 
-    // matrix vertex x block
-    val vertexVars = (0 until vertices).map{i =>
-      (0 until configuration.blocks.size).map(b => propVar(s"vertex $i -> block $b"))
+    val allConditions = {
+      symmetry(edgeVars) ++
+      onePerEdge(edgeVars) ++
+        uniquePerEdge(edgeVars) ++
+        blocksConditions(edgeVars, configuration)
+    }.filter(f => f != or())
+
+    solveForSatisfiability(and(allConditions:_*)) match {
+      case None => WithoutColoring
+      case Some(model) =>
+        ColoringExists(model
+          .filter(_._2)
+          .map{ x =>
+            val row = x._1.toString().split(" ")
+              val u = row(0).toInt
+              val v = row(1).toInt
+              val c = row(2).split("_").head.toInt
+              (Math.min(u, v), Math.max(u, v), c)
+          }.toSet.toSeq
+        )
     }
 
-    val allConditions = onePerEdge(edgeVars) ++
-      uniquePerEdge(edgeVars) /*++
-      onePerVertex(vertexVars) ++
-      uniquePerVertex(vertexVars) ++ createBlocks
-*/
-      .filter(f => f != or())
+  }
 
-    println("start")
-    val result = solveForSatisfiability(and(allConditions:_*)).get.filter(_._2)
-    println("end")
-    println(result.mkString("\n"))
-    WithoutColoring
+  def symmetry(vars: Seq[Seq[Seq[PropVar]]]) = {
+    for{
+      i <- vars.indices
+      j <- vars(i).indices
+      k <- vars(i)(j).indices
+      if i < j
+    } yield vars(i)(j)(k) iff vars(j)(i)(k)
   }
 
   def onePerEdge(vars: Seq[Seq[Seq[PropVar]]]) = vars.flatMap(row => row.map(cs => or(cs:_*)))
@@ -45,37 +59,24 @@ object SATColoringTest extends SnarkColoringTest{
     } yield or(!i, !j)
   })
 
-  def onePerVertex(vars: Seq[Seq[PropVar]]) = vars.map(cs => or(cs:_*))
-
-  def uniquePerVertex(vars: Seq[Seq[PropVar]]) = vars.flatMap{p =>
-    for{ i <- p
-         j <- p
-         if i != j
-    } yield or(!i, !j)
-  }
-
-  def connectBlockWithColors(edgeVars: Seq[Seq[Seq[PropVar]]],
-                             vertexVars: Seq[Seq[PropVar]],
-                             configuration: Configuration) = {
-    edgeVars.zipWithIndex.flatMap{case (row, vertex) =>
-      val indexes = row.zipWithIndex.filter(_._1.nonEmpty).map(_._2)
-
-      configuration.blocks.zipWithIndex.flatMap{case (block, blockIndex) =>
-        val col = block.points.toSeq
-        for{
-          i <- indexes
-          j <- indexes
-          if i != j
-          k <- indexes
-          if k != i && k != j
-        } yield {
-          val free = row(i)(col(0)) && row(j)(col(1)) && row(k)(col(2))
-          and(
-            or(!free, vertexVars(vertex)(blockIndex)),
-            or(free, !vertexVars(vertex)(blockIndex))
+  def blocksConditions(edgeVars: Seq[Seq[Seq[PropVar]]],
+                       configuration: Configuration) = {
+    edgeVars.map { row =>
+      val n = row.zipWithIndex.filter(_._1.nonEmpty).map(_._2)
+      or({
+          for{
+            i <- n
+            j <- n
+            if i != j
+            k <- n
+            if i != k && j != k
+            b <- configuration.blocks.map(_.points.toSeq)
+          } yield and(
+            row(i)(b(0)),
+            row(j)(b(1)),
+            row(k)(b(2))
           )
-        }
-      }
+        }:_*)
     }
   }
 }

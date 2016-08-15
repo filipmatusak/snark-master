@@ -2,6 +2,7 @@ package com.matfyz.snarkmaster.ui
 
 import java.awt.event.{ActionEvent, ActionListener}
 import javax.swing._
+import java.io.File
 
 import akka.actor.{Actor, ActorRef}
 import akka.event.LoggingReceive
