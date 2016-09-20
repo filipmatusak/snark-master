@@ -31,9 +31,9 @@ object SATColoringTest extends SnarkColoringTest{
           .filter(_._2)
           .map{ x =>
             val row = x._1.toString().split(" ")
-              val u = row(0).toInt
-              val v = row(1).toInt
-              val c = row(2).split("_").head.toInt
+              val u = row(1).toInt
+              val v = row(2).toInt
+              val c = row(4).split("_").head.toInt
               (Math.min(u, v), Math.max(u, v), c)
           }.toSet.toSeq
         )
