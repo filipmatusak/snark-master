@@ -18,7 +18,7 @@ class UIActor(listener: ActorRef) extends Actor{
   val mainPanel = new JPanel()
 
   frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE)
-  frame.setSize(800, 600)
+  frame.setSize(800, 400)
   mainPanel.setLayout(new BorderLayout())
   frame.add(mainPanel)
 
@@ -31,12 +31,17 @@ class UIActor(listener: ActorRef) extends Actor{
   override def receive: Receive = LoggingReceive {
     case ComponentInitialized =>
       componentInitialized += 1
-      if(componentInitialized == componentsCount) frame.setVisible(true)
+      if(componentInitialized == componentsCount){
+        frame.setVisible(true)
+        (0 until 30).foreach(i => logPanel ! LogText(i.toString))
+      }
     case m: GraphFileSelected => listener ! m
     case m: ParsedGraphs =>
       graphs = m.graphs
       controlPanel ! m
-    case StartTestGraphs => listener ! TestGraphs(graphs, Configuration.THConfiguration)
+    case StartTestGraphs =>
+      if(graphs.isEmpty) logPanel ! LogText("Select graph before test!")
+      else listener ! TestGraphs(graphs, Configuration.THConfiguration)
     case m: LogMessage => logPanel forward m
   }
 

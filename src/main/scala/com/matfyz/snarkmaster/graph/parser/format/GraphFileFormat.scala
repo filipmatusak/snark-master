@@ -14,11 +14,12 @@ trait GraphFileFormat {
 
       val lines = in.getLines()
 
-      parse(lines)
+      parse(file, lines)
     } catch {
+      //todo log
       case _: Exception => throw new SnarkMasterException("Parsing error")
     }
   }
 
-  def parse(lines: Iterator[String]): Seq[Graph]
+  def parse(file: File, lines: Iterator[String]): Seq[Graph]
 }

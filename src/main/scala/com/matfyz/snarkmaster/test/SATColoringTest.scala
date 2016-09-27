@@ -25,7 +25,7 @@ object SATColoringTest extends SnarkColoringTest{
     }.filter(f => f != or())
 
     solveForSatisfiability(and(allConditions:_*)) match {
-      case None => WithoutColoring
+      case None => WithoutColoring(graph)
       case Some(model) =>
         ColoringExists(model
           .filter(_._2)
@@ -35,7 +35,8 @@ object SATColoringTest extends SnarkColoringTest{
               val v = row(2).toInt
               val c = row(4).split("_").head.toInt
               (Math.min(u, v), Math.max(u, v), c)
-          }.toSet.toSeq
+          }.toSet.toSeq,
+          graph
         )
     }
 

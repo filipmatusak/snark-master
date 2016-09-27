@@ -4,6 +4,7 @@ import java.io.File
 
 import com.matfyz.snarkmaster.configuration.Configuration
 import com.matfyz.snarkmaster.graph.Graph
+import com.matfyz.snarkmaster.test.SnarkTestResult
 
 sealed trait Message
 
@@ -17,4 +18,6 @@ case class ParseGraph(file: File) extends Message
 
 case class ParsedGraphs(graphs: Seq[Graph], file: File) extends Message
 
-case class LogMessage(msg: String) extends Message
+sealed trait LogMessage extends Message
+case class LogText(msg: String) extends LogMessage
+case class LogResult(results: Seq[SnarkTestResult]) extends LogMessage

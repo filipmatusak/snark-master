@@ -16,7 +16,7 @@ trait SnarkColoringTest extends SnarkTest{
 
 
 trait SnarkTestResult
-case object WithoutColoring extends SnarkTestResult
-case class ColoringExists(coloring: Seq[(Int, Int , Int)]) extends SnarkTestResult
+case class WithoutColoring(graph: Graph) extends SnarkTestResult
+case class ColoringExists(coloring: Seq[(Int, Int , Int)], graph: Graph) extends SnarkTestResult
 
 
