@@ -6,10 +6,12 @@ import com.matfyz.snarkmaster.model.{LogResult, LogText, TestGraphs}
 
 class TestGuardianActor(listener: ActorRef) extends Actor{
   override def receive: Receive = LoggingReceive{
-    case TestGraphs(graphs, configuration) =>
-      listener ! LogText("Start test graphs: " + graphs.map(_.name).mkString(", "))
-      val testResult = SATColoringTest.test(graphs, configuration)
-      listener ! LogResult(testResult)
+    case TestGraphs(graphs, configuration, tests) =>
+      tests.foreach{ test =>
+        listener ! LogText("Start test graphs: " + graphs.map(_.name).mkString(", "))
+        val testResult = test.start(graphs, configuration)
+        listener ! LogResult(testResult)
+      }
   }
 }
 

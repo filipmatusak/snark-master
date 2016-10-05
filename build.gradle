@@ -1,5 +1,5 @@
 group 'SnarkMaster'
-version '1.0-SNAPSHOT'
+version '1.0'
 
 apply plugin: 'java'
 apply plugin: "scala"
@@ -27,15 +27,14 @@ dependencies {
     def scalaVersion = "2.11"
     def akkaVersion = "2.3.14"
 
-
     compile "org.scala-lang:scala-library:$scalaVersion.6"
+    compile "org.scala-lang:scala-swing:$scalaVersion.0-M7"
     compile "com.storm-enroute:scalameter-core_$scalaVersion:0.7"
 
     compile "com.typesafe.akka:akka-actor_$scalaVersion:$akkaVersion"
     compile "com.typesafe.akka:akka-cluster_$scalaVersion:$akkaVersion"
 
     compile files('lib/cafesat_2.11-0.01.jar')
-    compile files('lib/jacop-4.4.0.jar')
 
     testCompile group: 'junit', name: 'junit', version: '4.11'
     testCompile "org.scalatest:scalatest_$scalaVersion:2.2.1"
@@ -48,4 +47,19 @@ tasks.withType(ScalaCompile) {
         memoryMaximumSize = '1g'
         jvmArgs = ['-XX:MaxPermSize=512m']
     }
+}
+
+apply plugin: 'gradle-one-jar'
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.github.rholder:gradle-one-jar:1.0.4'
+    }
+}
+
+task awesomeFunJar(type: OneJar) {
+    mainClass = "com.matfyz.snarkmaster.SnarkMasterApp"
 }

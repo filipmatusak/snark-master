@@ -9,16 +9,11 @@ import scala.io.Source
 
 trait GraphFileFormat {
   def parse(file: File): Seq[Graph] = {
-    try{
-      val in = Source.fromFile(file)
+    val in = Source.fromFile(file)
 
-      val lines = in.getLines()
+    val lines = in.getLines()
 
-      parse(file, lines)
-    } catch {
-      //todo log
-      case _: Exception => throw new SnarkMasterException("Parsing error")
-    }
+    parse(file, lines)
   }
 
   def parse(file: File, lines: Iterator[String]): Seq[Graph]

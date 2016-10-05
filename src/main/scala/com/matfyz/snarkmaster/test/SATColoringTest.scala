@@ -1,10 +1,17 @@
 package com.matfyz.snarkmaster.test
 
-import com.matfyz.snarkmaster.configuration.Configuration
-import com.matfyz.snarkmaster.graph.{Edge, Graph}
 import cafesat.api.FormulaBuilder._
 import cafesat.api.Formulas.PropVar
 import cafesat.api.Solver._
+import com.matfyz.snarkmaster.configuration.Configuration
+import com.matfyz.snarkmaster.graph.Graph
+
+case object StartColoringTest extends StartTestMessage {
+  override def start(graphs: Seq[Graph], configuration: Configuration) = {
+    SATColoringTest.test(graphs, configuration)
+  }
+}
+
 
 object SATColoringTest extends SnarkColoringTest{
   def test(graph: Graph, configuration: Configuration) = {
@@ -18,6 +25,7 @@ object SATColoringTest extends SnarkColoringTest{
     })
 
     val allConditions = {
+      additionalConditions(edgeVars, graph, configuration) ++
       symmetry(edgeVars) ++
       onePerEdge(edgeVars) ++
         uniquePerEdge(edgeVars) ++
@@ -40,6 +48,14 @@ object SATColoringTest extends SnarkColoringTest{
         )
     }
 
+  }
+
+  def additionalConditions(edgeVars: Seq[Seq[Seq[PropVar]]], graph: Graph, configuration: Configuration) = {
+    if(configuration == Configuration.THConfiguration){
+      val edge = graph.edges.head.vertices.toSeq.map(_.id)
+      Seq(edgeVars(edge(0))(edge(1))(0) || edgeVars(edge(0))(edge(1))(1),
+        edgeVars(edge(1))(edge(0))(0) || edgeVars(edge(1))(edge(0))(1))
+    } else Nil
   }
 
   def symmetry(vars: Seq[Seq[Seq[PropVar]]]) = {

@@ -4,8 +4,11 @@ import com.matfyz.snarkmaster.configuration.Configuration
 import com.matfyz.snarkmaster.graph.{Edge, Graph}
 import com.matfyz.snarkmaster.model.Coloring
 
-
 trait SnarkTest
+
+trait StartTestMessage{
+  def start(graphs: Seq[Graph], configuration: Configuration): Seq[SnarkTestResult]
+}
 
 trait SnarkColoringTest extends SnarkTest{
   def test(graph: Seq[Graph], configuration: Configuration): Seq[SnarkTestResult] =
@@ -13,7 +16,6 @@ trait SnarkColoringTest extends SnarkTest{
 
   def test(graph: Graph, configuration: Configuration): SnarkTestResult
 }
-
 
 trait SnarkTestResult
 case class WithoutColoring(graph: Graph) extends SnarkTestResult

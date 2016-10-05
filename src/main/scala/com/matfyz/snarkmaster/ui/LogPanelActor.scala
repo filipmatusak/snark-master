@@ -1,12 +1,15 @@
 package com.matfyz.snarkmaster.ui
 
 import java.awt.{BorderLayout, Dimension}
+import java.text.SimpleDateFormat
+import java.time._
+import java.time.format.DateTimeFormatter
 import java.util.Date
 import javax.swing._
 import javax.swing.border.{EtchedBorder, TitledBorder}
 
 import akka.actor.{Actor, ActorRef}
-import com.matfyz.snarkmaster.model.{ComponentInitialized, LogResult, LogText}
+import com.matfyz.snarkmaster.model.{ComponentInitialized, LogException, LogResult, LogText}
 import com.matfyz.snarkmaster.test.{ColoringExists, SnarkTestResult, WithoutColoring}
 
 class LogPanelActor(uiActor: ActorRef,
@@ -37,6 +40,10 @@ class LogPanelActor(uiActor: ActorRef,
     case LogResult(results) =>
       results.foreach(r => textArea.append(logFormat(logResult(r))))
       toBottom()
+    case LogException(msg, ex) =>
+      textArea.append(logFormat(msg))
+      textArea.append(logFormat(ex.toString))
+      toBottom()
   }
 
   uiActor ! ComponentInitialized
@@ -56,8 +63,10 @@ object LogPanelActor{
     }
   }
 
+  val dateFormater = new SimpleDateFormat("dd-MM-yyyy  HH:mm:ss,SSS")
+
   private def logFormat(msg: String) = {
-    new Date().toInstant.toString + ": " + msg + "\n"
+    dateFormater.format(new Date()) + " :  " + msg + "\n"
   }
 }
 
