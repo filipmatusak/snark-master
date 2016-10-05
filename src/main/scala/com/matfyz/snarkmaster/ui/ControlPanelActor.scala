@@ -13,7 +13,7 @@ import com.matfyz.snarkmaster.test.{StartColoringTest, StartTestMessage}
 class ControlPanelActor(uiActor: ActorRef,
                         frame: JPanel) extends Actor{
   val panel = new JPanel()
-  val layout = new GridLayout(1, 0)
+  val layout = new GridLayout(3, 3)
   panel.setLayout(layout)
 
   // Row 1
@@ -30,7 +30,7 @@ class ControlPanelActor(uiActor: ActorRef,
   panel.add(new JLabel("Coloring test: "))
   panel.add(coloringTestCB)
   panel.add(coloringTestStatus)
-
+/*
   // Row 3
   val removabilityTestCB = new JCheckBox()
   removabilityTestCB.setEnabled(false)
@@ -38,7 +38,7 @@ class ControlPanelActor(uiActor: ActorRef,
   panel.add(new JLabel("Removability test: "))
   panel.add(removabilityTestCB)
   panel.add(removabilityTestStatus)
-
+*/
 
   val testStartButton = new JButton("Start Test")
   panel.add(testStartButton)
