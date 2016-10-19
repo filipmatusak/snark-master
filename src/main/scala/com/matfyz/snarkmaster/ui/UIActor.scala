@@ -8,6 +8,7 @@ import akka.event.LoggingReceive
 import com.matfyz.snarkmaster.configuration.Configuration
 import com.matfyz.snarkmaster.graph.Graph
 import com.matfyz.snarkmaster.model._
+import com.matfyz.snarkmaster.ui.controlPanel.ControlPanelActor
 
 class UIActor(listener: ActorRef) extends Actor{
 
@@ -34,6 +35,7 @@ class UIActor(listener: ActorRef) extends Actor{
       if(componentInitialized == componentsCount){
         frame.pack()
         frame.setVisible(true)
+        frame.setResizable(false)
       }
     case m: GraphFileSelected => listener ! m
     case m: ParsedGraphs =>
