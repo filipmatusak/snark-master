@@ -6,7 +6,7 @@ import cafesat.api.Solver._
 import com.matfyz.snarkmaster.configuration.Configuration
 import com.matfyz.snarkmaster.graph.Graph
 
-case object StartColoringTest extends StartTestMessage {
+case object StartSatColoringTest extends StartTestMessage {
   override def start(graphs: Seq[Graph], configuration: Configuration) = {
     SATColoringTest.test(graphs, configuration)
   }

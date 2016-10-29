@@ -1,10 +1,10 @@
-package com.matfyz.snarkmaster.graph.parser.format
+package com.matfyz.snarkmaster.parser.format
 
 import java.io.File
 
 import com.matfyz.snarkmaster.graph.Graph
 
-object SimpleTripleFormat extends GraphFileFormat{
+object TripleGraphFormat extends GraphFileFormat{
   override def parse(file: File, lines: Iterator[String]): Seq[Graph] = {
     val in = lines.filter(!_.startsWith("{"))
       .flatMap(_.split(" ").map(_.toInt))
@@ -20,8 +20,8 @@ object SimpleTripleFormat extends GraphFileFormat{
         .zipWithIndex
         .flatMap{ case (n, v) => n.map((v, _))}
         .foldLeft(new Graph(file.getName + "(" + (graphNumber+1) + ")")){case (g, (u, v)) =>
-          g.addVertex(u, false)
-            .addVertex(v, false)
+          g.addVertex(u)
+            .addVertex(v)
             .addBidirectionalEdge(u, v, false)
         }
     }

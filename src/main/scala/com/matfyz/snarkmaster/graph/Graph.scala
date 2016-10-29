@@ -6,7 +6,7 @@ case class Graph(name: String,
                  vertices: Map[Int, Vertex] = Map(),
                  edges: Set[Edge] = Set()){
 
-  def addVertex(id: Int, failIfExists: Boolean = true): Graph = {
+  def addVertex(id: Int, failIfExists: Boolean = false): Graph = {
     vertices.get(id) match {
       case None => Graph(name, vertices + (id -> Vertex(id)), edges)
       case Some(v) if failIfExists => throw new SnarkMasterException(s"Vertex $v already exists")
@@ -30,6 +30,10 @@ case class Graph(name: String,
   def areNeighbour(u: Int, v: Int): Boolean = {
     edges.contains(Edge(vertices(u), vertices(v)))
   }
+
+  def getNeighbour(x: Int): Set[Vertex] = {
+    edges.filter(_.vertices.contains(vertices(x))).flatMap(_.vertices)
+  }
 }
 
 case class Vertex(id: Int)
@@ -38,8 +42,8 @@ object Graph{
   def bidirectional(edges: (Int, Int)*): Graph = {
     edges.foldLeft(new Graph("")){case (graph, (u, v)) =>
       graph
-        .addVertex(u, false)
-        .addVertex(v, false)
+        .addVertex(u)
+        .addVertex(v)
         .addBidirectionalEdge(u, v)
     }
   }

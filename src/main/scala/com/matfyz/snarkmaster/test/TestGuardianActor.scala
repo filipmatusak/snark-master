@@ -10,11 +10,11 @@ class TestGuardianActor(listener: ActorRef) extends Actor{
       tests.foreach{ test =>
         listener ! LogText("Start test graphs: " + graphs.map(_.name).mkString(", "))
         val testResult = test.start(graphs, configuration)
-        listener ! LogResult(testResult)
+        sender ! testResult
       }
   }
 }
 
 object TestGuardianActor{
-  val name = "test-guardian"
+  val actorName = "test-guardian"
 }

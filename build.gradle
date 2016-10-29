@@ -1,5 +1,5 @@
 group 'SnarkMaster'
-version '1.0'
+version '1.2'
 
 apply plugin: 'java'
 apply plugin: "scala"

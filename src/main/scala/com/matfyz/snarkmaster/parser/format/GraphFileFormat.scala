@@ -1,4 +1,4 @@
-package com.matfyz.snarkmaster.graph.parser.format
+package com.matfyz.snarkmaster.parser.format
 
 import java.io.File
 
