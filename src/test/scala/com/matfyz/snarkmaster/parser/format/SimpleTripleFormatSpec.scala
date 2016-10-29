@@ -1,5 +1,7 @@
 package com.matfyz.snarkmaster.parser.format
 
+import java.io.File
+
 import com.matfyz.snarkmaster.graph.Graph
 import org.scalatest.FlatSpec
 
@@ -9,7 +11,7 @@ class SimpleTripleFormatSpec extends FlatSpec{
   behavior of "parse"
 
   it should "parse simple graph" in {
-    val res = TripleGraphFormat.parse(rawData1.split("\n").toIterator)
+    val res = TripleGraphFormat.parse(new File(""), rawData1.split("\n").toIterator)
     assert(res === graphs1)
   }
 }
