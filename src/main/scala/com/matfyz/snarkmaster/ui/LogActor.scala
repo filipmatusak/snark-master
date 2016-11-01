@@ -23,7 +23,6 @@ class LogActor(listener: ActorRef, mainFrame: MainForm) extends Actor {
       ex.foreach(t => textArea.append(logFormat(t.toString)))
   }
 
-  init(mainFrame)
 }
 
 object LogActor{
@@ -35,7 +34,9 @@ object LogActor{
       case ColoringExists(coloring, graph) =>
         "Graph " + graph.name + " has coloring \n" +
           coloring.map{ x => (x._1, x._2) + " -> " + x._3}.mkString("\t","\n\t","")
-      case r: TransitionResult => ""
+      case r: TransitionResult => "Graph " + r.graph.name + " has " + r.colorings.size + " transitions\n" +
+        "edge vertices are " + r.edgeVertices.mkString("(", ", ", ")") + "\n" +
+        r.colorings.mkString("\t","\n\t","")
     }
   }
 
@@ -43,18 +44,5 @@ object LogActor{
 
   private def logFormat(msg: String) = {
     dateFormater.format(new Date()) + " :  " + msg + "\n"
-  }
-
-  def init(mainForm: MainForm) = {
-    mainForm.logTextArea.addInputMethodListener(new InputMethodListener() {
-      def inputMethodTextChanged(event: InputMethodEvent): Unit = {
-        println("AAAA")
-        mainForm.logTextArea.setCaretPosition(mainForm.logTextArea.getDocument.getLength)
-      }
-      def caretPositionChanged(event: InputMethodEvent): Unit = {
-        println("AAAA")
-
-      }
-    })
   }
 }
