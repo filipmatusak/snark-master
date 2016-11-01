@@ -6,7 +6,7 @@ import java.util.Date
 
 import akka.actor.{Actor, ActorRef}
 import com.matfyz.snarkmaster.model.{LogException, LogResult, LogText}
-import com.matfyz.snarkmaster.test.{ColoringExists, SnarkTestResult, WithoutColoring}
+import com.matfyz.snarkmaster.test.{ColoringExists, SnarkTestResult, TransitionResult, WithoutColoring}
 
 class LogActor(listener: ActorRef, mainFrame: MainForm) extends Actor {
   import LogActor._
@@ -35,6 +35,7 @@ object LogActor{
       case ColoringExists(coloring, graph) =>
         "Graph " + graph.name + " has coloring \n" +
           coloring.map{ x => (x._1, x._2) + " -> " + x._3}.mkString("\t","\n\t","")
+      case r: TransitionResult => ""
     }
   }
 

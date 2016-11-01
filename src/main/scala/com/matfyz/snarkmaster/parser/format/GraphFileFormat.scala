@@ -3,7 +3,7 @@ package com.matfyz.snarkmaster.parser.format
 import java.io.File
 
 import com.matfyz.snarkmaster.SnarkMasterException
-import com.matfyz.snarkmaster.graph.Graph
+import com.matfyz.snarkmaster.graph.{Component, Graph}
 
 import scala.io.Source
 

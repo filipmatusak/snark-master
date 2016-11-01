@@ -1,8 +1,10 @@
 package com.matfyz.snarkmaster.parser
 
+import java.io.File
+
 import akka.actor.{Actor, ActorRef}
 import akka.event.LoggingReceive
-import com.matfyz.snarkmaster.parser.format.{SimpleGraphFromat, TripleGraphFormat}
+import com.matfyz.snarkmaster.parser.format.{GraphFileFormat, SimpleGraphFromat, TripleGraphFormat}
 import com.matfyz.snarkmaster.model._
 
 class GraphParser(listener: ActorRef) extends Actor{

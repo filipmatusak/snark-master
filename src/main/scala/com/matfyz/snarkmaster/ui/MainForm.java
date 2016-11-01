@@ -15,9 +15,10 @@ public class MainForm {
     public JLabel graphInputName;
     public JButton startColoringTestButton;
     public JLabel coloringTestStatus;
-    private JLabel inputComponentName;
-    private JButton selectComponentButton;
-    private JButton startTransitionTestButton;
+    public JLabel inputComponentName;
+    public JButton selectComponentButton;
+    public JButton startTransitionTestButton;
+    public JLabel transitionTestStatus;
 
     public void run() {
         JFrame frame = new JFrame("MainForm");

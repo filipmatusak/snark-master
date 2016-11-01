@@ -19,6 +19,6 @@ trait SnarkColoringTest extends SnarkTest{
 trait SnarkTestResult
 case class WithoutColoring(graph: Graph) extends SnarkTestResult
 case class ColoringExists(coloring: Seq[(Int, Int , Int)], graph: Graph) extends SnarkTestResult
-case class TransitionResult(graph: Graph) extends SnarkTestResult
+case class TransitionResult(graph: Graph, configuration: Configuration, colorings: Seq[Seq[Int]]) extends SnarkTestResult
 
 

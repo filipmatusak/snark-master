@@ -32,7 +32,7 @@ case class Graph(name: String,
   }
 
   def getNeighbour(x: Int): Set[Vertex] = {
-    edges.filter(_.vertices.contains(vertices(x))).flatMap(_.vertices)
+    edges.filter(_.vertices.contains(vertices(x))).flatMap(_.vertices).filter(_.id != x)
   }
 }
 

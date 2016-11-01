@@ -28,8 +28,8 @@ object SATColoringTest extends SnarkColoringTest{
       additionalConditions(edgeVars, graph, configuration) ++
       symmetry(edgeVars) ++
       onePerEdge(edgeVars) ++
-        uniquePerEdge(edgeVars) ++
-        blocksConditions(edgeVars, configuration)
+      uniquePerEdge(edgeVars) ++
+      blocksConditions(edgeVars, configuration)
     }.filter(f => f != or())
 
     solveForSatisfiability(and(allConditions:_*)) match {

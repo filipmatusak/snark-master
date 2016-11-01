@@ -3,7 +3,7 @@ package com.matfyz.snarkmaster.model
 import java.io.File
 
 import com.matfyz.snarkmaster.configuration.Configuration
-import com.matfyz.snarkmaster.graph.Graph
+import com.matfyz.snarkmaster.graph.{Component, Graph}
 import com.matfyz.snarkmaster.parser.format.GraphFileFormat
 import com.matfyz.snarkmaster.test.{SnarkTestResult, StartTestMessage}
 

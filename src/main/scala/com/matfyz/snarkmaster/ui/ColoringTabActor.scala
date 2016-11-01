@@ -43,7 +43,7 @@ class ColoringTabActor(uIActor: ActorRef, mainForm: MainForm) extends Actor{
       else if(configuration.isEmpty) uIActor ! LogException("Select configuration")
       else {
         uIActor ! TestGraphs(graphs, configuration.get, Seq(StartSatColoringTest))
-        mainForm.coloringTestStatus.setText("in progress")
+        mainForm.coloringTestStatus.setText("processing")
       }
     }
   })
