@@ -7,7 +7,7 @@ object SnarkMasterApp extends App{
  val system = ActorSystem("SnarkMaster")
 
  val mainFrame = new MainForm()
- mainFrame.run()
+   mainFrame.run()
 
  val nodeGuardian = system.actorOf(Props(new NodeGuardian(mainFrame)), NodeGuardian.name)
 
