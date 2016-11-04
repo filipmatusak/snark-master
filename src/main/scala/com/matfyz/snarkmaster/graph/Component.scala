@@ -1,3 +1,3 @@
 package com.matfyz.snarkmaster.graph
 
-class Component(graph: Graph, edges: Seq[Int])
+case class Component(graph: Graph, connectors: Seq[(Int, Int)])

@@ -45,7 +45,7 @@ public class MainForm {
     private void $$$setupUI$$$() {
         panel1 = new JPanel();
         panel1.setLayout(new BorderLayout(0, 0));
-        panel1.setPreferredSize(new Dimension(500, 300));
+        panel1.setPreferredSize(new Dimension(600, 400));
         tabbedPane1 = new JTabbedPane();
         panel1.add(tabbedPane1, BorderLayout.NORTH);
         final JPanel panel2 = new JPanel();
@@ -105,7 +105,7 @@ public class MainForm {
         logTextArea.setMargin(new Insets(1, 10, 1, 10));
         logTextArea.setOpaque(true);
         logTextArea.setRequestFocusEnabled(true);
-        logTextArea.setRows(10);
+        logTextArea.setRows(15);
         logTextArea.setSelectedTextColor(new Color(-16777216));
         logTextArea.setText("");
         logTextArea.setVerifyInputWhenFocusTarget(false);
@@ -120,7 +120,7 @@ public class MainForm {
         return panel1;
     }
 
-  /*  public static MainForm run() {
+    /*  public static MainForm run() {
         JFrame frame = new JFrame("MainForm");
         MainForm t = new MainForm();
         frame.setContentPane(t.panel1);

@@ -157,7 +157,7 @@
               <margin top="1" left="10" bottom="1" right="10"/>
               <opaque value="true"/>
               <requestFocusEnabled value="true"/>
-              <rows value="10"/>
+              <rows value="15"/>
               <selectedTextColor color="-16777216"/>
               <text value=""/>
               <verifyInputWhenFocusTarget value="false"/>

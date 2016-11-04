@@ -3,7 +3,7 @@ import java.io.File
 
 import com.matfyz.snarkmaster.graph.Graph
 
-object SimpleGraphFromat extends GraphFileFormat{
+object SimpleGraphFormat extends GraphFileFormat{
   override def parse(file: File, lines: Iterator[String]): Seq[Graph] = {
     val in = lines.filter(!_.startsWith("{"))
       .map(_.split(" ").map(_.toInt))

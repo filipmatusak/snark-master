@@ -34,9 +34,9 @@ object LogActor{
       case ColoringExists(coloring, graph) =>
         "Graph " + graph.name + " has coloring \n" +
           coloring.map{ x => (x._1, x._2) + " -> " + x._3}.mkString("\t","\n\t","")
-      case r: TransitionResult => "Graph " + r.graph.name + " has " + r.colorings.size + " transitions\n" +
+      case r: TransitionResult => "Graph " + r.graph.name + " has " + r.transitions.size + " transitions\n" +
         "edge vertices are " + r.edgeVertices.mkString("(", ", ", ")") + "\n" +
-        r.colorings.mkString("\t","\n\t","")
+        r.transitions.map(x=> x.mkString(", ")).toSeq.sorted.mkString("\t","\n\t","")
     }
   }
 
