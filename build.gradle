@@ -65,3 +65,8 @@ buildscript {
 task awesomeFunJar(type: OneJar) {
     mainClass = "com.matfyz.snarkmaster.SnarkMasterApp"
 }
+
+task leaderJar(type: OneJar){
+    mainClass = "com.matfyz.snarkmaster.cluster.leader.LeaderApp"
+    baseName = "SnarkMasterLeaderApp"
+}

@@ -10,7 +10,7 @@ import com.matfyz.snarkmaster.configuration.Configuration.THFactors
 
 case object StartTransitionTest extends StartComponentTestMessage{
   override def start(component: Component, configuration: Configuration): Seq[SnarkTestResult] = {
-    SATTransitionTest.findTransition(component, configuration)
+     SATTransitionTest.findTransition(component, configuration)
   }
 }
 
@@ -50,9 +50,13 @@ object SATTransitionTest extends SnarkTest {
 
     val jobs = combinations.indices.map{ i =>
       task{
+        val startTime = System.nanoTime()
+        println("start " + combinations(i))
         val r = tryToColor(combinations(i), edgeVerices, baseConditions, edgeVars)
+        val endTime = System.nanoTime()
         result.update(i, r)
-        println(combinations(i))
+        println("computed in " + (endTime - startTime)/1000000000 + " s")
+        if(r) println(combinations(i))
       }
     }.foreach(_.join())
 
@@ -85,7 +89,7 @@ object SATTransitionTest extends SnarkTest {
 
   def tHTransitionFilter(colors: Seq[Int]): Boolean = {
     (colors(0), colors(1)) match {
-      case (0, 9) | (9, 0) | (0, 1) | (1, 0) | (1, 3) | (3, 1) | (3, 6) | (6, 3) |
+      case (0, 9) | (0, 1) | (1, 0) | (3, 1) | (3, 6) |
            (1, 7) | (7,1) | (0, 0) | (1, 1) => true
     //  case (0, 9) | (0, 1) | (1, 3) | (3, 6) | (1, 7)  => true
       case _ => false
