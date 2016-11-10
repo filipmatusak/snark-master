@@ -7,7 +7,7 @@ import com.matfyz.snarkmaster.graph.{Component, Graph}
 import com.matfyz.snarkmaster.parser.format.{ComponentFileFormat, GraphFileFormat}
 import com.matfyz.snarkmaster.test.{SnarkTestResult, StartComponentTestMessage, StartTestMessage}
 
-sealed trait Message
+sealed trait Message extends Serializable
 
 sealed trait ControlPanelMessage extends Message
 case class TestGraphs(graphs: Seq[Graph], configuration: Configuration, tests: Seq[StartTestMessage]) extends ControlPanelMessage

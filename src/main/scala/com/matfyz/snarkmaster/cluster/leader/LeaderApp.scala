@@ -2,15 +2,17 @@ package com.matfyz.snarkmaster.cluster.leader
 
 import akka.actor.{ActorSystem, Props}
 import akka.cluster.Cluster
-import com.typesafe.config.ConfigFactory
-import Leader._
 import com.matfyz.snarkmaster.cluster.Roles
+import com.matfyz.snarkmaster.cluster.leader.Leader._
+import com.typesafe.config.ConfigFactory
 
 object LeaderApp extends App{
 
+  val selfAddress = args(0)
+
   val conf = ConfigFactory
     .parseString("akka.remote.netty.tcp.port=4455,"+
-      "akka.remote.netty.tcp.hostname=127.0.0.1," +
+      s"akka.remote.netty.tcp.hostname=$selfAddress," +
       "akka.actor.provider=\"akka.cluster.ClusterActorRefProvider\"," +
       s"akka.cluster.roles = [${Roles.leader}]")
 
@@ -23,8 +25,6 @@ object LeaderApp extends App{
 
   println(system)
   println(cluster)
-  println(cluster.selfAddress)
-  println(clusterGuardian.path)
 }
 
 object Leader{
