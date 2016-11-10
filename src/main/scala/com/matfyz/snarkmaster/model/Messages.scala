@@ -24,3 +24,4 @@ sealed trait LogMessage extends Message
 case class LogText(msg: String) extends LogMessage
 case class LogException(msg: String, cause: Option[Throwable] = None) extends LogMessage
 case class LogResult(results: Seq[SnarkTestResult]) extends LogMessage
+

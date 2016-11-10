@@ -7,7 +7,7 @@ import com.matfyz.snarkmaster.parser.GraphParserActor
 import com.matfyz.snarkmaster.test.TestGuardianActor
 import com.matfyz.snarkmaster.ui.{MainForm, UIActor}
 
-class NodeGuardian(mainForm: MainForm) extends Actor{
+class NodeGuardian(mainForm: MainForm) extends BaseActor{
   val uiActor = context.actorOf(Props(new UIActor(self, mainForm)), UIActor.actorName)
   val testGuardianActor =  context.actorOf(Props(new TestGuardianActor(self)), TestGuardianActor.actorName)
   val graphParserActor = context.actorOf(Props(new GraphParserActor(self)), GraphParserActor.actorName)
