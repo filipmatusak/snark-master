@@ -1,3 +1,7 @@
 package com.matfyz.snarkmaster.cluster
 
-case class Task() extends Serializable
+class Task(f: => Any) extends Serializable {
+  def apply(): Any = f
+}
+
+case class Job(id: Int, task: Task) extends Serializable

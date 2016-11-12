@@ -1,40 +1,48 @@
 package com.matfyz.snarkmaster.cluster.leader
 
-import akka.actor.Actor.Receive
 import akka.actor.ActorRef
 import akka.event.LoggingReceive
-import com.matfyz.snarkmaster.BaseActor
-import com.matfyz.snarkmaster.cluster.{NewTask, Task, WaitingForTask}
+import akka.pattern.ask
+import akka.util.Timeout
+import com.matfyz.snarkmaster.cluster._
+import com.matfyz.snarkmaster.{BaseActor, SnarkMasterException}
 
 import scala.collection.mutable
-import scala.concurrent.Future
-import akka.pattern.{ask, pipe}
-
-import scala.util.{Failure, Success}
+import scala.concurrent.duration._
+import scala.util.Success
 
 class JobSchedulerActor extends BaseActor {
+  override implicit val timeout = Timeout(5.minutes)
 
   val workers = mutable.Queue[ActorRef]()
-  val tasks = mutable.Queue[(ActorRef, Task)]()
+  val jobs = mutable.Queue[(ActorRef, Job)]()
 
   override def receive: Receive = LoggingReceive {
-    case WaitingForTask =>
-      if(tasks.isEmpty) workers.enqueue(sender())
-      else {
-        val oldTask = tasks.dequeue()
-        (workers.dequeue() ? oldTask._2).onComplete{
-          case Success(res) => oldTask._1 ! res
-          case Failure(f) =>
-            log.error("Task " + tasks + " has failed\n" + f.toString)
-            log.warning("Task " + tasks + " rescheduled")
-            tasks.enqueue(oldTask)
-        }
-      }
-    case NewTask(t) =>
+    case WaitingForJob =>
+      log.info("Worker " + sender().path + " wait for task")
+      workers.enqueue(sender())
+      if(jobs.nonEmpty) runJob()
+    case ComputeJob(j) =>
+      log.info("Job " + j.id + " scheduled")
+      jobs.enqueue((sender(), j))
+      if(workers.nonEmpty) runJob()
     case x => println(x)
   }
 
-  val ff: Future[Future[Int]] = ???
+  def runJob() = {
+    val worker = workers.dequeue()
+    val job = jobs.dequeue()
+    (worker ? ComputeJob(job._2)).onComplete{
+      case res: Success[FinishedJob] =>
+        if(res.value.jobId != job._2.id) throw new SnarkMasterException("Worker " + worker + " responded wrong job result " +
+          "expected " + job._2.id + " and get " + res.value.jobId )
+        job._1 ! res.value
+      case f =>
+        log.error("Task " + jobs + " has failed\n" + f.toString)
+        log.warning("Task " + jobs + " rescheduled")
+        jobs.enqueue(job)
+    }
+  }
 }
 
 object JobSchedulerActor{

@@ -19,6 +19,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="SnarkMaster_itest" target="1.5" />
       <module name="SnarkMaster_main" target="1.5" />
       <module name="SnarkMaster_test" target="1.5" />
     </bytecodeTargetLevel>

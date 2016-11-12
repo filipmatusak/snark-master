@@ -6,7 +6,7 @@ import akka.cluster.{Cluster, Member}
 import akka.cluster.ClusterEvent.{MemberJoined, MemberUp, ReachableMember, UnreachableMember}
 import akka.event.LoggingReceive
 import com.matfyz.snarkmaster.BaseActor
-import com.matfyz.snarkmaster.cluster.{Roles, WaitingForTask}
+import com.matfyz.snarkmaster.cluster.{Roles, WaitingForJob}
 import com.matfyz.snarkmaster.cluster.leader.{ClusterGuardian, Leader}
 
 import scala.concurrent.duration._
@@ -36,7 +36,7 @@ object WorkerActor{
       val clusterGuardian = context.actorSelection(RootActorPath(m.address) / "user" / ClusterGuardian.name)
       clusterGuardian ! "Hello, at your service"
 
-      (1 to parallelism).foreach(_ => clusterGuardian ! WaitingForTask)
+      (1 to parallelism).foreach(_ => clusterGuardian ! WaitingForJob)
     }
   }
 }

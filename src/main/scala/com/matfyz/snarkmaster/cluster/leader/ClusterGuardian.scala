@@ -5,7 +5,7 @@ import akka.cluster.{Cluster, Member}
 import akka.cluster.ClusterEvent.{MemberUp, UnreachableMember}
 import akka.event.LoggingReceive
 import com.matfyz.snarkmaster.BaseActor
-import com.matfyz.snarkmaster.cluster.{TaskMessage, WaitingForTask}
+import com.matfyz.snarkmaster.cluster.{TaskMessage, WaitingForJob}
 
 class ClusterGuardian extends BaseActor {
   import ClusterGuardian._

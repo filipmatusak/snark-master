@@ -21,6 +21,11 @@ sourceSets {
             srcDirs = ['src/test/scala']
         }
     }
+    itest {
+        scala {
+            srcDirs = ['src/itest/scala']
+        }
+    }
 }
 
 dependencies {
@@ -48,6 +53,32 @@ tasks.withType(ScalaCompile) {
     configure(scalaCompileOptions.forkOptions) {
         memoryMaximumSize = '1g'
         jvmArgs = ['-XX:MaxPermSize=512m']
+    }
+}
+
+configurations {
+    itestCompile.extendsFrom testCompile
+    itestRuntime.extendsFrom testRuntime
+    deployerJars
+}
+
+sourceSets {
+    itest {
+        scala {
+            srcDir 'src/itest/scala'
+        }
+
+        compileClasspath = sourceSets.main.output + sourceSets.test.output + configurations.itestCompile
+        runtimeClasspath = output + compileClasspath + configurations.itestRuntime
+    }
+}
+
+task itest(type: Test) {
+    testClassesDir = sourceSets.itest.output.classesDir
+    classpath = sourceSets.itest.runtimeClasspath
+
+    testLogging {
+        events "passed", "skipped", "failed"
     }
 }
 
