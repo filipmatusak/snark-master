@@ -30,6 +30,7 @@ case class ColoringExists(coloring: Seq[(Int, Int , Int)], graph: Graph) extends
 case class TransitionResult(graph: Graph,
                             configuration: Configuration,
                             transitions: Set[Seq[Configuration.THFactors]],
+                            rawTransitions: Seq[Seq[Int]],
                             edgeVertices: Seq[Int]) extends SnarkTestResult
 
 

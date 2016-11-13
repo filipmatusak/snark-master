@@ -64,7 +64,7 @@ object SATTransitionTest extends SnarkTest {
     }.toSet
 
 
-    Seq(TransitionResult(graph, configuration, resTrans, edgeVerices))
+    Seq(TransitionResult(graph, configuration, resTrans, goodColorings, edgeVerices))
   }
 
   def tryToColor(colors: Seq[Int], vertices: Seq[Int], conditions: Seq[Formula], vars: Seq[Seq[Seq[PropVar]]]): Boolean = {
