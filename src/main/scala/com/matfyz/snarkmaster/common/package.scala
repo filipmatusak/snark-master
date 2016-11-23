@@ -6,7 +6,7 @@ import scala.util.DynamicVariable
 
 package object common {
 
-  val forkJoinPool = new ForkJoinPool
+  val forkJoinPool = new ForkJoinPool()
 
   abstract class TaskScheduler {
     def schedule[T](body: => T): ForkJoinTask[T]

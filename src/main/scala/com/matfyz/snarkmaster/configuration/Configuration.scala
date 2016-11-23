@@ -20,10 +20,23 @@ object Configuration{
     Block(7, 8, 9)
   ))
 
+  val extendedTHConfiguration = Configuration(Set(
+    Block(0, 1, 2),
+    Block(0, 3, 7),
+    Block(0, 4, 9),
+    Block(2, 5, 7),
+    Block(2, 6, 9),
+    Block(7, 8, 9),
+    Block(1, 3, 5),
+    Block(3, 4, 8),
+    Block(5, 6, 8),
+    Block(1, 4, 6)
+  ))
+
   sealed trait THFactors
   case object Edge extends THFactors
-  case object MidPoints extends THFactors
-  case object CornerPoints extends THFactors
+  case object MidPoint extends THFactors
+  case object CornerPoint extends THFactors
   case object Angle extends THFactors
   case object Half_line extends THFactors
   case object Axis extends THFactors
@@ -36,8 +49,8 @@ object Configuration{
     val norm = if(t._1 > t._2) t.swap else t
     norm match {
       case (a, b) if a != b && corners.contains(a) && corners.contains(b) => Edge
-      case (a, b) if a == b && mids.contains(a) => MidPoints
-      case (a, b) if a == b && corners.contains(a) => CornerPoints
+      case (a, b) if a == b && mids.contains(a) => MidPoint
+      case (a, b) if a == b && corners.contains(a) => CornerPoint
       case (1, 8) | (3, 4) | (4, 5) => Axis
       case (a, b) if mids.contains(a) && mids.contains(b) => Angle
       case (a, b) if THConfiguration.blocks.exists(x => x.points.contains(a) && x.points.contains(b)) => Half_line

@@ -14,7 +14,6 @@ import com.matfyz.snarkmaster.test.{SnarkTestResult, StartSatColoringTest}
 
 class ColoringTabActor(uIActor: ActorRef, mainForm: MainForm) extends Actor{
   var graphs: Seq[Graph] = Nil
-  var configuration: Option[Configuration] = Some(Configuration.THConfiguration)
 
   override def receive: Receive = LoggingReceive{
     case m: ParsedGraphs =>
@@ -39,6 +38,7 @@ class ColoringTabActor(uIActor: ActorRef, mainForm: MainForm) extends Actor{
 
   mainForm.startColoringTestButton.addActionListener(new ActionListener() {
     def actionPerformed(e: ActionEvent): Unit = {
+      val configuration = getSelectedConfiguration
       if(graphs.isEmpty) uIActor ! LogException("Select graph")
       else if(configuration.isEmpty) uIActor ! LogException("Select configuration")
       else {
@@ -47,6 +47,12 @@ class ColoringTabActor(uIActor: ActorRef, mainForm: MainForm) extends Actor{
       }
     }
   })
+
+  def getSelectedConfiguration: Option[Configuration] = {
+    if(mainForm.configurationSelection1.isSelected) return Some(Configuration.THConfiguration)
+    if(mainForm.configurationSelection2.isSelected) return Some(Configuration.extendedTHConfiguration)
+    None
+  }
 
 }
 
