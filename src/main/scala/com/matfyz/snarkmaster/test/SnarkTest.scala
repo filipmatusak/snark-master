@@ -32,5 +32,7 @@ case class TransitionResult(graph: Graph,
                             transitions: Set[Seq[Configuration.THFactors]],
                             rawTransitions: Seq[Seq[Int]],
                             edgeVertices: Seq[Int]) extends SnarkTestResult
+case class TransitionExists(graph: Graph, configuration: Configuration) extends SnarkTestResult
+case class TransitionDoesntExists(graph: Graph, configuration: Configuration) extends SnarkTestResult
 
 

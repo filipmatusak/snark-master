@@ -12,7 +12,6 @@ case object StartSatColoringTest extends StartTestMessage {
   }
 }
 
-
 object SATColoringTest extends SnarkColoringTest{
   def test(graph: Graph, configuration: Configuration) = {
     val vertices = graph.getSize
@@ -80,6 +79,9 @@ object SATColoringTest extends SnarkColoringTest{
                        configuration: Configuration) = {
     edgeVars.map { row =>
       val n = row.zipWithIndex.filter(_._1.nonEmpty).map(_._2)
+      if(n.contains(34) && n.contains(44)){
+        val a = 0
+      }
       or({
           for{
             i <- n
@@ -88,11 +90,12 @@ object SATColoringTest extends SnarkColoringTest{
             k <- n
             if i != k && j != k
             b <- configuration.blocks.map(_.points.toSeq)
-          } yield and(
+          } yield {
+            and(
             row(i)(b(0)),
             row(j)(b(1)),
             row(k)(b(2))
-          )
+          )}
         }:_*)
     }
   }

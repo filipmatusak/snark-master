@@ -21,6 +21,8 @@ public class MainForm {
     public JLabel transitionTestStatus;
     public JRadioButton configurationSelection1;
     public JRadioButton configurationSelection2;
+    public JButton startTransitionExistTestButton;
+    public JLabel transitionExistTestStatus;
 
     public void run() {
         JFrame frame = new JFrame("MainForm");
@@ -91,7 +93,7 @@ public class MainForm {
         panel4.setLayout(new GridLayoutManager(1, 1, new Insets(20, 20, 20, 20), 20, 20));
         tabbedPane1.addTab("Transition", panel4);
         final JPanel panel5 = new JPanel();
-        panel5.setLayout(new GridLayoutManager(2, 3, new Insets(0, 0, 0, 0), 10, 10));
+        panel5.setLayout(new GridLayoutManager(3, 3, new Insets(0, 0, 0, 0), 10, 10));
         panel4.add(panel5, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, true));
         final JLabel label3 = new JLabel();
         label3.setText("Component:");
@@ -109,6 +111,12 @@ public class MainForm {
         transitionTestStatus = new JLabel();
         transitionTestStatus.setText("");
         panel5.add(transitionTestStatus, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        startTransitionExistTestButton = new JButton();
+        startTransitionExistTestButton.setText("Start existence test");
+        panel5.add(startTransitionExistTestButton, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        transitionExistTestStatus = new JLabel();
+        transitionExistTestStatus.setText("");
+        panel5.add(transitionExistTestStatus, new GridConstraints(2, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         logPane = new JScrollPane();
         logPane.setAutoscrolls(true);
         logPane.setVerticalScrollBarPolicy(22);

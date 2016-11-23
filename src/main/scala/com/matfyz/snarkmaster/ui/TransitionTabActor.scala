@@ -9,7 +9,7 @@ import com.matfyz.snarkmaster.configuration.Configuration
 import com.matfyz.snarkmaster.graph.{Component, Graph}
 import com.matfyz.snarkmaster.model.{TestGraphs, _}
 import com.matfyz.snarkmaster.parser.format.{SimpleComponentFormat, SimpleGraphFormat}
-import com.matfyz.snarkmaster.test.{SnarkTestResult, StartTransitionTest}
+import com.matfyz.snarkmaster.test.{SnarkTestResult, StartTransitionExistTest, StartTransitionTest, TransitionResult}
 
 class TransitionTabActor(uIActor: ActorRef, mainForm: MainForm) extends Actor{
   var component: Option[Component] = None
@@ -21,7 +21,10 @@ class TransitionTabActor(uIActor: ActorRef, mainForm: MainForm) extends Actor{
       mainForm.inputComponentName.setText(m.file.getName)
       uIActor ! LogText("Parsed component from " + m.file.getName)
     case r: Seq[SnarkTestResult] =>
-      mainForm.transitionTestStatus.setText("")
+      r.head match {
+        case _: TransitionResult => mainForm.transitionTestStatus.setText("")
+        case _ => mainForm.transitionExistTestStatus.setText("")
+      }
       uIActor ! LogResult(r)
     case _ =>
   }
@@ -47,6 +50,16 @@ class TransitionTabActor(uIActor: ActorRef, mainForm: MainForm) extends Actor{
     }
   })
 
+  mainForm.startTransitionExistTestButton.addActionListener(new ActionListener() {
+    def actionPerformed(e: ActionEvent): Unit = {
+      if(component.isEmpty) uIActor ! LogException("Select component")
+      else if(configuration.isEmpty) uIActor ! LogException("Select configuration")
+      else {
+        uIActor ! TestComponent(component.get, configuration.get, Seq(StartTransitionExistTest))
+        mainForm.transitionExistTestStatus.setText("processing")
+      }
+    }
+  })
 }
 
 object TransitionTabActor {
