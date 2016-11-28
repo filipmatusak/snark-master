@@ -16,7 +16,7 @@ object NodeApp {
     val parallelism = args(2).toInt
 
     val conf = ConfigFactory.parseString(s"akka.remote.netty.tcp.port=4456,"+
-      "akka.remote.netty.tcp.hostname=127.0.1.1," +
+      s"akka.remote.netty.tcp.hostname=127.0.1.1," +
       "akka.actor.provider=\"akka.cluster.ClusterActorRefProvider\"," +
       s"akka.cluster.roles = [${Roles.worker}]")
 
@@ -26,6 +26,8 @@ object NodeApp {
     val leaderAddress = cluster.selfAddress.copy(
       host = Some(clusterHostName),
       port = Some(clusterPort))
+
+  //  cluster.joinSeedNodes(Vector(leaderAddress))
 
     val worker = system.actorOf(Props(new WorkerActor(parallelism, leaderAddress)), WorkerActor.name)
   }

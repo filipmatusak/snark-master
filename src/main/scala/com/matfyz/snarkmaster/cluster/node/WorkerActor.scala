@@ -1,42 +1,70 @@
 package com.matfyz.snarkmaster.cluster.node
 
-import akka.actor.Actor.Receive
-import akka.actor.{ActorContext, ActorSystem, Address, RootActorPath}
-import akka.cluster.{Cluster, Member}
-import akka.cluster.ClusterEvent.{MemberJoined, MemberUp, ReachableMember, UnreachableMember}
+import akka.actor.{ActorContext, ActorSelection, Address, Kill, RootActorPath}
+import akka.cluster.Cluster
+import akka.cluster.ClusterEvent.{MemberUp, UnreachableMember}
 import akka.event.LoggingReceive
 import com.matfyz.snarkmaster.BaseActor
-import com.matfyz.snarkmaster.cluster.{Roles, WaitingForJob}
-import com.matfyz.snarkmaster.cluster.leader.{ClusterGuardian, Leader}
+import com.matfyz.snarkmaster.cluster._
+import com.matfyz.snarkmaster.cluster.leader.ClusterGuardian
 
+import scala.concurrent.Future
 import scala.concurrent.duration._
+import scala.util.Success
 
-class WorkerActor(parallelism: Int, leaderAddress: Address) extends BaseActor{
-  import WorkerActor._
+class WorkerActor(parallelism: Int, leaderAddress: Address) extends BaseActor {
 
   val cluster = Cluster(context.system)
 
+  val activeJobs = scala.collection.mutable.Set[(Int, Future[Any])]()
+
+  var clusterGuardian: ActorSelection = null
+
   override def preStart(): Unit = cluster.subscribe(self, classOf[MemberUp], classOf[UnreachableMember])
-  override def postStop(): Unit = cluster.unsubscribe(self)
+  override def postStop(): Unit = {
+    activeJobs.foreach{case (id,_) => clusterGuardian ! JobFailed(id, "Worker " + self.path + " finished")}
+    cluster.unsubscribe(self)
+  }
 
   override def receive: Receive = LoggingReceive {
-    case MemberUp(m) if m.hasRole(Roles.leader) => register(m, parallelism)
-    case UnreachableMember(m) if m.hasRole(Roles.leader) => cluster.system.terminate()
+    case MemberUp(m) if m.hasRole(Roles.leader) =>
+      clusterGuardian = context.actorSelection(RootActorPath(m.address) / "user" / ClusterGuardian.name)
+      register(clusterGuardian, parallelism)
+    case ComputeJob(job) =>
+      val originSender = sender()
+      val resFuture = Future {
+        log.info("Start executing job " + job.id)
+        val res = job.task.apply()
+        res
+      }
+      activeJobs += Tuple2(job.id, resFuture)
+      resFuture.onComplete(_ => activeJobs.remove(Tuple2(job.id, resFuture)))
+
+      resFuture.onComplete{
+        case res: Success[Any] => originSender ! FinishedJob(job.id, res)
+        case f => originSender ! JobFailed(job.id, f.toString)
+      }
+    case KillJobs => self ! Kill
+    case LogStats => logStats()
     case x => println(x)
   }
 
   cluster.joinSeedNodes(Vector(leaderAddress))
+
+  def logStats() = {
+    log.info("Stats:\n" +
+      "actice jobs: " + activeJobs.map(_._1).toString)
+  }
+
+  def register(clusterGuardian: ActorSelection, parallelism: Int)(implicit context: ActorContext) = {
+    clusterGuardian ! "Hello, at your service"
+
+    (1 to parallelism).foreach(_ => clusterGuardian.!(WaitingForJob))
+  }
+
+  context.system.scheduler.schedule(0.second, 10.seconds, self, LogStats)
 }
 
 object WorkerActor{
   val name = "worker-actor"
-
-  def register(m: Member, parallelism: Int)(implicit context: ActorContext) = {
-    if(m.hasRole(Roles.leader)){
-      val clusterGuardian = context.actorSelection(RootActorPath(m.address) / "user" / ClusterGuardian.name)
-      clusterGuardian ! "Hello, at your service"
-
-      (1 to parallelism).foreach(_ => clusterGuardian ! WaitingForJob)
-    }
-  }
 }

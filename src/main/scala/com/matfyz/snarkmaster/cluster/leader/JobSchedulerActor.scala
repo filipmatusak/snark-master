@@ -26,6 +26,8 @@ class JobSchedulerActor extends BaseActor {
       log.info("Job " + j.id + " scheduled")
       jobs.enqueue((sender(), j))
       if(workers.nonEmpty) runJob()
+    case CleanScheduler => context.actorSelection("/user/*") ! KillJobs
+    case LogStats => logStats
     case x => println(x)
   }
 
@@ -34,7 +36,8 @@ class JobSchedulerActor extends BaseActor {
     val job = jobs.dequeue()
     (worker ? ComputeJob(job._2)).onComplete{
       case res: Success[FinishedJob] =>
-        if(res.value.jobId != job._2.id) throw new SnarkMasterException("Worker " + worker + " responded wrong job result " +
+        if(res.value.jobId != job._2.id)
+          throw new SnarkMasterException("Worker " + worker + " responded wrong job result " +
           "expected " + job._2.id + " and get " + res.value.jobId )
         job._1 ! res.value
       case f =>
@@ -43,6 +46,14 @@ class JobSchedulerActor extends BaseActor {
         jobs.enqueue(job)
     }
   }
+
+  def logStats() = {
+    log.info("Stats:\n" +
+      "waiting workers: " + workers.size + "\n" + workers.toString() + "\n" +
+      "waiting jobs: " + jobs.map(_._2.id).toString())
+  }
+
+  context.system.scheduler.schedule(0.second, 10.seconds, self, LogStats)
 }
 
 object JobSchedulerActor{

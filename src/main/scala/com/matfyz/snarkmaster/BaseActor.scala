@@ -13,6 +13,10 @@ trait BaseActor extends Actor with ActorLogging{
 
   implicit val ctx = context.dispatcher
 
+  implicit val Sender = self
+
+  import context.dispatcher
+
   override val supervisorStrategy =
     OneForOneStrategy(maxNrOfRetries = 10, withinTimeRange = 1.minute) {
       case _: ActorInitializationException => Restart

@@ -18,7 +18,10 @@ class ClusterGuardian extends BaseActor {
   override def postStop(): Unit = cluster.unsubscribe(self)
 
   override def receive: Receive = LoggingReceive {
-    case m: TaskMessage => jobSchedulerActor forward m
+    case m: TaskMessage => {
+      println(sender())
+      jobSchedulerActor forward m
+    }
     case UnreachableMember(m) => leaveMember(m.address, cluster)
     case x => println(x)
   }
