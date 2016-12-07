@@ -1,5 +1,7 @@
 package com.matfyz.snarkmaster.cluster.node
 
+import java.util.UUID
+
 import akka.actor.{ActorContext, ActorSelection, Address, Kill, RootActorPath}
 import akka.cluster.Cluster
 import akka.cluster.ClusterEvent.{MemberUp, UnreachableMember}
@@ -18,12 +20,16 @@ class WorkerActor(parallelism: Int, leaderAddress: Address) extends BaseActor {
 
   val activeJobs = scala.collection.mutable.Set[(Int, Future[Any])]()
 
+  val id = UUID.randomUUID()
+
   var clusterGuardian: ActorSelection = null
 
   override def preStart(): Unit = cluster.subscribe(self, classOf[MemberUp], classOf[UnreachableMember])
   override def postStop(): Unit = {
+    clusterGuardian ! WorkerUnregister(id)
     activeJobs.foreach{case (id,_) => clusterGuardian ! JobFailed(id, "Worker " + self.path + " finished")}
     cluster.unsubscribe(self)
+    println("unregister me")
   }
 
   override def receive: Receive = LoggingReceive {
@@ -59,7 +65,7 @@ class WorkerActor(parallelism: Int, leaderAddress: Address) extends BaseActor {
   def register(clusterGuardian: ActorSelection, parallelism: Int)(implicit context: ActorContext) = {
     clusterGuardian ! "Hello, at your service"
 
-    (1 to parallelism).foreach(_ => clusterGuardian.!(WaitingForJob))
+    (1 to parallelism).foreach(_ => clusterGuardian.!(WaitingForJob(id)))
   }
 
   context.system.scheduler.schedule(0.second, 10.seconds, self, LogStats)
