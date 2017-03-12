@@ -49,9 +49,10 @@ class ColoringTabActor(uIActor: ActorRef, mainForm: MainForm) extends Actor{
   })
 
   def getSelectedConfiguration: Option[Configuration] = {
-    if(mainForm.configurationSelection1.isSelected) return Some(Configuration.THConfiguration)
-    if(mainForm.configurationSelection2.isSelected) return Some(Configuration.extendedTHConfiguration)
-    None
+    if(mainForm.configurationSelection1.isSelected) Some(Configuration.THConfiguration)
+    else if(mainForm.configurationSelection2.isSelected) Some(Configuration.extendedTHConfiguration)
+    else if(mainForm.configurationSelection3.isSelected) Some(Configuration.threeColoring)
+    else None
   }
 
 }

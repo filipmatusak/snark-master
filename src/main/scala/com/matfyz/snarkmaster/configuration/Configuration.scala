@@ -33,6 +33,8 @@ object Configuration{
     Block(1, 4, 6)
   ))
 
+  val threeColoring = Configuration(Set(Block(0,1,2)))
+
   sealed trait THFactors
   case object Edge extends THFactors
   case object MidPoint extends THFactors
@@ -51,7 +53,7 @@ object Configuration{
       case (a, b) if a != b && corners.contains(a) && corners.contains(b) => Edge
       case (a, b) if a == b && mids.contains(a) => MidPoint
       case (a, b) if a == b && corners.contains(a) => CornerPoint
-      case (1, 8) | (3, 4) | (4, 5) => Axis
+      case (1, 8) | (3, 6) | (4, 5) => Axis
       case (a, b) if mids.contains(a) && mids.contains(b) => Angle
       case (a, b) if THConfiguration.blocks.exists(x => x.points.contains(a) && x.points.contains(b)) => Half_line
       case (a, b) if (mids.contains(a) && corners.contains(b)) || (mids.contains(b) && corners.contains(a)) &&
