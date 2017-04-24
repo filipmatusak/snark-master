@@ -6,12 +6,12 @@ import javax.swing.JFileChooser
 import akka.actor.{Actor, ActorRef}
 import akka.event.LoggingReceive
 import com.matfyz.snarkmaster.configuration.Configuration
-import com.matfyz.snarkmaster.graph.{Component, Graph}
-import com.matfyz.snarkmaster.model.{TestGraphs, _}
-import com.matfyz.snarkmaster.parser.format.{SimpleComponentFormat, SimpleGraphFormat}
+import com.matfyz.snarkmaster.graph.Component
+import com.matfyz.snarkmaster.model._
+import com.matfyz.snarkmaster.parser.format.SimpleComponentFormat
 import com.matfyz.snarkmaster.test.{SnarkTestResult, StartTransitionExistTest, StartTransitionTest, TransitionResult}
 
-class TransitionTabActor(uIActor: ActorRef, mainForm: MainForm) extends Actor{
+class TransitionsTabActor(uIActor: ActorRef, mainForm: MainForm) extends Actor{
   var component: Option[Component] = None
   var configuration: Option[Configuration] = Some(Configuration.THConfiguration)
 
@@ -62,6 +62,6 @@ class TransitionTabActor(uIActor: ActorRef, mainForm: MainForm) extends Actor{
   })
 }
 
-object TransitionTabActor {
+object TransitionsTabActor {
   val actorName = "transition-tab"
 }

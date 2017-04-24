@@ -1,6 +1,5 @@
 package com.matfyz.snarkmaster.ui
 
-import java.awt.event.{InputMethodEvent, InputMethodListener}
 import java.text.SimpleDateFormat
 import java.util.Date
 

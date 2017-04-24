@@ -2,11 +2,9 @@ package com.matfyz.snarkmaster.test
 import cafesat.api.FormulaBuilder._
 import cafesat.api.Formulas.{Formula, PropVar}
 import cafesat.api.Solver._
-import cafesat.sat.Solver
-import com.matfyz.snarkmaster.configuration.Configuration
-import com.matfyz.snarkmaster.graph.{Component, Graph}
 import com.matfyz.snarkmaster.common._
-import com.matfyz.snarkmaster.configuration.Configuration.THFactors
+import com.matfyz.snarkmaster.configuration.Configuration
+import com.matfyz.snarkmaster.graph.Component
 
 case object StartTransitionTest extends StartComponentTestMessage{
   override def start(component: Component, configuration: Configuration): Seq[SnarkTestResult] = {
@@ -87,7 +85,6 @@ object SATTransitionTest extends SnarkTest {
     (colors(0), colors(1)) match {
       case (0, 9) | (9, 0) | (0, 1) | (1, 0) | (1, 3) | (3, 1) | (3, 6) | (6, 3) |
            (1, 7) | (7,1) | (0, 0) | (1, 1) => true
-    //  case (0, 9) | (0, 1) | (1, 3) | (3, 6) | (1, 7)  => true
       case _ => false
     }
   }

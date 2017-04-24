@@ -1,13 +1,16 @@
 package com.matfyz.snarkmaster.ui
 
-import akka.actor.Actor.Receive
 import akka.actor.{Actor, ActorRef, Props}
 import com.matfyz.snarkmaster.model._
 
-class UIActor(listener: ActorRef, mainFrame: MainForm) extends Actor{
+class UIGuardianActor(listener: ActorRef) extends Actor{
+
+  val mainFrame = new MainForm()
+  mainFrame.run()
+
   val logActor = context.actorOf(Props(new LogActor(self, mainFrame)), LogActor.actorName)
   val coloringTabActor = context.actorOf(Props(new ColoringTabActor(self, mainFrame)), ColoringTabActor.actorName)
-  val transitionTabActor = context.actorOf(Props(new TransitionTabActor(self, mainFrame)), TransitionTabActor.actorName)
+  val transitionsTabActor = context.actorOf(Props(new TransitionsTabActor(self, mainFrame)), TransitionsTabActor.actorName)
 
   override def receive: Receive = {
     case m: LogMessage => logActor forward m
@@ -18,6 +21,6 @@ class UIActor(listener: ActorRef, mainFrame: MainForm) extends Actor{
   }
 }
 
-object UIActor{
+object UIGuardianActor{
   val actorName = "ui-actor"
 }

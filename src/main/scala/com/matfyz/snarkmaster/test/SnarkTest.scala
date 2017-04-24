@@ -24,7 +24,7 @@ trait SnarkTransitionTest extends SnarkTest{
   def test(component: Component, configuration: Configuration): Seq[SnarkTestResult]
 }
 
-trait SnarkTestResult
+sealed trait SnarkTestResult
 case class WithoutColoring(graph: Graph) extends SnarkTestResult
 case class ColoringExists(coloring: Seq[(Int, Int , Int)], graph: Graph) extends SnarkTestResult
 case class TransitionResult(graph: Graph,

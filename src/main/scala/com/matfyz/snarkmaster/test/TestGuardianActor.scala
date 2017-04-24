@@ -2,10 +2,10 @@ package com.matfyz.snarkmaster.test
 
 import akka.actor.{Actor, ActorRef}
 import akka.event.LoggingReceive
-import com.matfyz.snarkmaster.model.{LogResult, LogText, TestComponent, TestGraphs}
+import com.matfyz.snarkmaster.model.{LogText, TestComponent, TestGraphs}
 
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.{ExecutionContext, Future}
-import ExecutionContext.Implicits.global
 
 class TestGuardianActor(listener: ActorRef) extends Actor{
   override def receive: Receive = LoggingReceive{
