@@ -24,9 +24,12 @@ public class MainForm {
     public JButton startTransitionExistTestButton;
     public JLabel transitionExistTestStatus;
     public JRadioButton configurationSelection3;
+    public JRadioButton configurationSelection4;
+    public JRadioButton configurationSelection5;
+    public JRadioButton configurationSelection6;
 
     public void run() {
-        JFrame frame = new JFrame("MainForm");
+        JFrame frame = new JFrame("SnarkMaster");
         frame.setContentPane(panel1);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
@@ -36,6 +39,9 @@ public class MainForm {
         configurationSelectionGroup1.add(configurationSelection2);
         configurationSelectionGroup1.add(configurationSelection1);
         configurationSelectionGroup1.add(configurationSelection3);
+        configurationSelectionGroup1.add(configurationSelection4);
+        configurationSelectionGroup1.add(configurationSelection5);
+        configurationSelectionGroup1.add(configurationSelection6);
     }
 
 
@@ -67,7 +73,7 @@ public class MainForm {
         panel2.setLayout(new GridLayoutManager(1, 1, new Insets(20, 20, 20, 20), 20, 20));
         tabbedPane1.addTab("Coloring", panel2);
         final JPanel panel3 = new JPanel();
-        panel3.setLayout(new GridLayoutManager(5, 3, new Insets(0, 0, 0, 0), 10, 10));
+        panel3.setLayout(new GridLayoutManager(6, 3, new Insets(0, 0, 0, 0), 10, 10));
         panel2.add(panel3, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, true));
         final JLabel label1 = new JLabel();
         label1.setText("Graph:");
@@ -81,13 +87,13 @@ public class MainForm {
         panel3.add(selectGraphButton, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         startColoringTestButton = new JButton();
         startColoringTestButton.setText("Start test");
-        panel3.add(startColoringTestButton, new GridConstraints(4, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel3.add(startColoringTestButton, new GridConstraints(5, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JLabel label2 = new JLabel();
         label2.setText("Configuration:");
         panel3.add(label2, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         coloringTestStatus = new JLabel();
         coloringTestStatus.setText("");
-        panel3.add(coloringTestStatus, new GridConstraints(4, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel3.add(coloringTestStatus, new GridConstraints(5, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         configurationSelection1 = new JRadioButton();
         configurationSelection1.setSelected(true);
         configurationSelection1.setText("Tetrahedral");
@@ -98,6 +104,17 @@ public class MainForm {
         configurationSelection3 = new JRadioButton();
         configurationSelection3.setText("Three Coloring");
         panel3.add(configurationSelection3, new GridConstraints(3, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        configurationSelection4 = new JRadioButton();
+        configurationSelection4.setText("TH with quasi line");
+        panel3.add(configurationSelection4, new GridConstraints(4, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        configurationSelection5 = new JRadioButton();
+        configurationSelection5.setSelected(true);
+        configurationSelection5.setText("TH with (Angle,Mid)");
+        panel3.add(configurationSelection5, new GridConstraints(2, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        configurationSelection6 = new JRadioButton();
+        configurationSelection6.setSelected(true);
+        configurationSelection6.setText("TH with (Angle,Cor)");
+        panel3.add(configurationSelection6, new GridConstraints(3, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JPanel panel4 = new JPanel();
         panel4.setLayout(new GridLayoutManager(1, 1, new Insets(20, 20, 20, 20), 20, 20));
         tabbedPane1.addTab("Transition", panel4);

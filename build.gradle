@@ -1,5 +1,5 @@
 group 'SnarkMaster'
-version '1.4'
+version '1.7'
 
 apply plugin: 'java'
 apply plugin: "scala"
@@ -62,6 +62,6 @@ buildscript {
     }
 }
 
-task awesomeFunJar(type: OneJar) {
+task buildJar(type: OneJar) {
     mainClass = "com.matfyz.snarkmaster.SnarkMasterApp"
 }

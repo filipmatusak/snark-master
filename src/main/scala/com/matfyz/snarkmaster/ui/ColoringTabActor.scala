@@ -52,6 +52,9 @@ class ColoringTabActor(uIActor: ActorRef, mainForm: MainForm) extends Actor{
     if(mainForm.configurationSelection1.isSelected) Some(Configuration.THConfiguration)
     else if(mainForm.configurationSelection2.isSelected) Some(Configuration.extendedTHConfiguration)
     else if(mainForm.configurationSelection3.isSelected) Some(Configuration.threeColoring)
+    else if(mainForm.configurationSelection4.isSelected) Some(Configuration.THwithQuasiLine)
+    else if(mainForm.configurationSelection5.isSelected) Some(Configuration.THAngleMid)
+    else if(mainForm.configurationSelection6.isSelected) Some(Configuration.THAngleCor)
     else None
   }
 

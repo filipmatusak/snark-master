@@ -33,7 +33,37 @@ object Configuration{
     Block(1, 4, 6)
   ))
 
+  val THwithQuasiLine = Configuration(Set(
+    Block(0, 1, 2),
+    Block(0, 3, 7),
+    Block(0, 4, 9),
+    Block(2, 5, 7),
+    Block(2, 6, 9),
+    Block(7, 8, 9),
+    Block(1, 3, 4)
+  ))
+
   val threeColoring = Configuration(Set(Block(0,1,2)))
+
+  val THAngleMid = Configuration(Set(
+    Block(0, 1, 2),
+    Block(0, 3, 7),
+    Block(0, 4, 9),
+    Block(2, 5, 7),
+    Block(2, 6, 9),
+    Block(7, 8, 9),
+    Block(3, 4, 6)
+  ))
+
+  val THAngleCor = Configuration(Set(
+    Block(0, 1, 2),
+    Block(0, 3, 7),
+    Block(0, 4, 9),
+    Block(2, 5, 7),
+    Block(2, 6, 9),
+    Block(7, 8, 9),
+    Block(3, 4, 2)
+  ))
 
   sealed trait THFactors
   case object Edge extends THFactors

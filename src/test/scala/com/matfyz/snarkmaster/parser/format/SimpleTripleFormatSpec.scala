@@ -28,7 +28,7 @@ object SimpleTripleFormatSpec{
       |0 2 1
     """.stripMargin
 
-  val graphs1 = Seq(Graph.bidirectional(
+  val graphs1 = Seq(Graph.apply(
     (0, 1), (0, 2), (0, 3),
     (1, 2), (1, 3),
     (2, 3)

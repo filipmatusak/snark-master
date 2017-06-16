@@ -39,7 +39,7 @@ case class Graph(name: String,
 case class Vertex(id: Int)
 
 object Graph{
-  def bidirectional(edges: (Int, Int)*): Graph = {
+  def apply(edges: (Int, Int)*): Graph = {
     edges.foldLeft(new Graph("")){case (graph, (u, v)) =>
       graph
         .addVertex(u)
