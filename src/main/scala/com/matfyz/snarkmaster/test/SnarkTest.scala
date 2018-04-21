@@ -1,6 +1,6 @@
 package com.matfyz.snarkmaster.test
 
-import com.matfyz.snarkmaster.configuration.Configuration
+import com.matfyz.snarkmaster.configuration.{Configuration, Point}
 import com.matfyz.snarkmaster.graph.{Component, Graph}
 
 trait SnarkTest
@@ -30,7 +30,7 @@ case class ColoringExists(coloring: Seq[(Int, Int , Int)], graph: Graph) extends
 case class TransitionResult(graph: Graph,
                             configuration: Configuration,
                             transitions: Set[Seq[Configuration.THFactors]],
-                            rawTransitions: Seq[Seq[Int]],
+                            rawTransitions: Seq[Seq[Point]],
                             edgeVertices: Seq[Int]) extends SnarkTestResult
 case class TransitionExists(graph: Graph, configuration: Configuration) extends SnarkTestResult
 case class TransitionDoesntExists(graph: Graph, configuration: Configuration) extends SnarkTestResult

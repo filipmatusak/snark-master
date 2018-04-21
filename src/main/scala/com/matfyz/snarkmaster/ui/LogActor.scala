@@ -37,7 +37,7 @@ object LogActor{
 
       case r: TransitionResult => "Graph " + r.graph.name + " has " + r.transitions.size + " transitions\n" +
         "edge vertices are " + r.edgeVertices.mkString("(", ", ", ")") + "\n" +
-        r.rawTransitions.map(x=> x.mkString(", ")).sorted.mkString("\t","\n\t","\n") +
+        r.rawTransitions.map(x=> x.map(_.id).mkString(", ")).sorted.mkString("\t","\n\t","\n") +
         "edge vertices are " + r.edgeVertices.mkString("(", ", ", ")") + "\n" +
         r.transitions.map(x=> x.mkString(", ")).toSeq.sorted.mkString("\t","\n\t","\n")
 

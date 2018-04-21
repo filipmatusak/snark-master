@@ -26,3 +26,12 @@ project/plugins/project/
 # ENSIME specific
 .ensime_cache/
 .ensime
+.gradle/
+build/libs/
+build/one-jar-build/.version
+build/one-jar-build/META-INF/
+build/one-jar-build/doc/
+build/one-jar-build/lib/
+build/one-jar-build/main/
+build/tmp/
+/.idea/modules/SnarkMaster_main.iml

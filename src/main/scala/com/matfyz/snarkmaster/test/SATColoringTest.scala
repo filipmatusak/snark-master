@@ -19,7 +19,7 @@ object SATColoringTest extends SnarkColoringTest{
 
     // matrix vertex x vertex x color
     val edgeVars = (0 until vertices).map(i => (0 until vertices).map{j =>
-      if(graph.areNeighbour(i, j)) (0 until colors).map(c => propVar(s"edge $i $j -> $c"))
+      if(graph.areNeighbour(i, j)) (0 until colors.size).map(c => propVar(s"edge $i $j -> $c"))
       else Nil
     })
 
@@ -79,9 +79,6 @@ object SATColoringTest extends SnarkColoringTest{
                        configuration: Configuration) = {
     edgeVars.map { row =>
       val n = row.zipWithIndex.filter(_._1.nonEmpty).map(_._2)
-      if(n.contains(34) && n.contains(44)){
-        val a = 0
-      }
       or({
           for{
             i <- n
@@ -92,9 +89,9 @@ object SATColoringTest extends SnarkColoringTest{
             b <- configuration.blocks.map(_.points.toSeq)
           } yield {
             and(
-            row(i)(b(0)),
-            row(j)(b(1)),
-            row(k)(b(2))
+            row(i)(b(0).id),
+            row(j)(b(1).id),
+            row(k)(b(2).id)
           )}
         }:_*)
     }
