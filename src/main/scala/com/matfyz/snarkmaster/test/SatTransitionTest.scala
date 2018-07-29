@@ -1,10 +1,10 @@
 package com.matfyz.snarkmaster.test
-import cafesat.api.FormulaBuilder._
-import cafesat.api.Formulas.{Formula, PropVar}
-import cafesat.api.Solver._
 import com.matfyz.snarkmaster.common._
 import com.matfyz.snarkmaster.configuration.{Configuration, Point}
 import com.matfyz.snarkmaster.graph.Component
+import com.matfyz.snarkmaster.solver.LingelingSolver
+import sat.formulas.CNF
+import sat.formulas._
 
 case object StartTransitionTest extends StartComponentTestMessage{
   override def start(component: Component, configuration: Configuration): Seq[SnarkTestResult] = {
@@ -24,7 +24,7 @@ object SATTransitionTest extends SnarkTest {
       val residual = (graph.vertices.keys.toSet -- normalVerices) -- connectorVerices
       val edgeVerices = connectorVerices ++ residual.toSeq
 
-      println(edgeVerices)
+      //println(edgeVerices)
 
       val combinations = {
         for {i <- colors.toSeq
@@ -37,16 +37,16 @@ object SATTransitionTest extends SnarkTest {
 
       // matrix vertex x vertex x color
       val edgeVars = (0 until vertices).map(i => (0 until vertices).map { j =>
-        if (graph.areNeighbour(i, j)) (0 until colors.size).map(c => propVar(s"edge $i $j -> $c"))
+        if (graph.areNeighbour(i, j)) (0 until colors.size).map(c => Var(s"edge $i $j -> $c"))
         else Nil
       })
 
-      val baseConditions = {
-        SATColoringTest.symmetry(edgeVars) ++
-          SATColoringTest.onePerEdge(edgeVars) ++
-          SATColoringTest.uniquePerEdge(edgeVars) ++
-          SATColoringTest.blocksConditions(edgeVars, configuration)
-      }.filter(f => f != or())
+      val baseConditions = CNF(
+        SATColoringTest.symmetry(edgeVars).clauses ++
+          SATColoringTest.onePerEdge(edgeVars).clauses ++
+          SATColoringTest.uniquePerEdge(edgeVars).clauses ++
+          SATColoringTest.blocksConditions(edgeVars, configuration).clauses
+      )
 
       val result = new Array[Boolean](combinations.size)
 
@@ -74,15 +74,16 @@ object SATTransitionTest extends SnarkTest {
     }
   }
 
-  def tryToColor(colors: Seq[Point], vertices: Seq[Int], conditions: Seq[Formula], vars: Seq[Seq[Seq[PropVar]]]): Boolean = {
-    val allConditions = conditions ++ setTransitionEdges(colors, vertices, vars)
-    solveForSatisfiability(and(allConditions: _*)) match {
+  def tryToColor(colors: Seq[Point], vertices: Seq[Int], conditions: CNF, vars: Seq[Seq[Seq[Var]]]): Boolean = {
+    val transitionConditions = setTransitionEdges(colors, vertices, vars).map(CNF.convert)
+    val allConditions = CNF(conditions.clauses ++ transitionConditions.flatMap(_.clauses))
+    new LingelingSolver().solve(vars.flatMap(_.flatten).toSet, allConditions) match {
       case None => false
       case Some(model) => true
     }
   }
 
-  def setTransitionEdges(colors: Seq[Point], vertices: Seq[Int], vars: Seq[Seq[Seq[PropVar]]]) = {
+  def setTransitionEdges(colors: Seq[Point], vertices: Seq[Int], vars: Seq[Seq[Seq[Var]]]) = {
     colors.zip(vertices).map { case (c, v) =>
       val neigh = vars(v).zipWithIndex.filter(_._1.nonEmpty).map(_._2).head
       and(vars(neigh)(v)(c.id), vars(v)(neigh)(c.id))

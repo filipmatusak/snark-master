@@ -1,5 +1,5 @@
 group 'SnarkMaster'
-version '1.8'
+version '2.0'
 
 apply plugin: 'java'
 apply plugin: "scala"
@@ -36,7 +36,7 @@ dependencies {
 
     compile 'com.intellij:forms_rt:6.0.5'
 
-    compile files('lib/cafesat_2.11-0.01.jar')
+    compile files('lib/sat-formulas_2.11-0.1.jar')
 
     testCompile group: 'junit', name: 'junit', version: '4.11'
     testCompile "org.scalatest:scalatest_$scalaVersion:2.2.1"
