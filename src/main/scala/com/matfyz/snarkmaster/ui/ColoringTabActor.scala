@@ -10,7 +10,7 @@ import com.matfyz.snarkmaster.configuration.Configuration
 import com.matfyz.snarkmaster.graph.Graph
 import com.matfyz.snarkmaster.model._
 import com.matfyz.snarkmaster.parser.format.TripleGraphFormat
-import com.matfyz.snarkmaster.test.{SnarkTestResult, StartSatColoringTest}
+import com.matfyz.snarkmaster.test.{SnarkTestResult, StartRemovableVerticesTest, StartSatColoringTest}
 
 class ColoringTabActor(uIActor: ActorRef, mainForm: MainForm) extends Actor{
   var graphs: Seq[Graph] = Nil
@@ -43,6 +43,18 @@ class ColoringTabActor(uIActor: ActorRef, mainForm: MainForm) extends Actor{
       else if(configuration.isEmpty) uIActor ! LogException("Select configuration")
       else {
         uIActor ! TestGraphs(graphs, configuration.get, Seq(StartSatColoringTest))
+        mainForm.coloringTestStatus.setText("processing")
+      }
+    }
+  })
+
+  mainForm.startRemovableVerticesButton.addActionListener(new ActionListener() {
+    def actionPerformed(e: ActionEvent): Unit = {
+      val configuration = getSelectedConfiguration
+      if(graphs.isEmpty) uIActor ! LogException("Select graph")
+      else if(configuration.isEmpty) uIActor ! LogException("Select configuration")
+      else {
+        uIActor ! TestGraphs(graphs, configuration.get, Seq(StartRemovableVerticesTest))
         mainForm.coloringTestStatus.setText("processing")
       }
     }

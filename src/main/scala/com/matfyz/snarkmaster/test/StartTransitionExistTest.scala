@@ -8,7 +8,7 @@ case object StartTransitionExistTest extends StartComponentTestMessage {
     SATColoringTest.test(component.graph, configuration) match {
       case WithoutColoring(graph) => Seq(TransitionDoesntExists(graph, configuration))
       case ColoringExists(coloring, graph) =>
-        println(coloring.mkString("\n"))
+      //  println(coloring.mkString("\n"))
         Seq(TransitionExists(graph, configuration))
     }
   }

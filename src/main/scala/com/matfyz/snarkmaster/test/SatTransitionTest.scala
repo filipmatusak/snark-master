@@ -12,7 +12,7 @@ case object StartTransitionTest extends StartComponentTestMessage{
   }
 }
 
-object SATTransitionTest extends SnarkTest {
+object SATTransitionTest {
   def findTransition(component: Component, configuration: Configuration): Seq[SnarkTestResult] = {
     try {
       val graph = component.graph
