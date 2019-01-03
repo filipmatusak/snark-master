@@ -48,18 +48,6 @@ class ColoringTabActor(uIActor: ActorRef, mainForm: MainForm) extends Actor{
     }
   })
 
-  mainForm.startRemovableVerticesButton.addActionListener(new ActionListener() {
-    def actionPerformed(e: ActionEvent): Unit = {
-      val configuration = getSelectedConfiguration
-      if(graphs.isEmpty) uIActor ! LogException("Select graph")
-      else if(configuration.isEmpty) uIActor ! LogException("Select configuration")
-      else {
-        uIActor ! TestGraphs(graphs, configuration.get, Seq(StartRemovableVerticesTest))
-        mainForm.coloringTestStatus.setText("processing")
-      }
-    }
-  })
-
   def getSelectedConfiguration: Option[Configuration] = {
     if(mainForm.configurationSelection1.isSelected) Some(Configuration.THConfiguration)
     else if(mainForm.configurationSelection2.isSelected) Some(Configuration.extendedTHConfiguration)

@@ -34,6 +34,17 @@ case class Graph(name: String,
   def getNeighbour(x: Int): Set[Vertex] = {
     edges.filter(_.vertices.contains(vertices(x))).flatMap(_.vertices).filter(_.id != x)
   }
+
+  def removeVertex(vertex: Int): Graph = {
+    this.copy(
+      vertices = vertices.toSeq
+        .filter(_._1 != vertex)
+        .map(x => if(x._1 > vertex) x.copy(_1 = x._1 -1, _2 = x._2.copy(id = x._2.id-1)) else x).toMap,
+      edges = edges
+        .filter(!_.vertices.map(_.id).contains(vertex))
+        .map( e => e.copy(vertices = e.vertices.map(x => if(x.id > vertex) x.copy(id = x.id -1) else x)))
+    )
+  }
 }
 
 case class Vertex(id: Int)

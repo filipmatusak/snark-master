@@ -68,7 +68,7 @@ object SATTransitionTest {
 
       Seq(TransitionResult(graph, configuration, resTrans, goodColorings, edgeVerices))
     } catch {
-      case e =>
+      case e: Throwable =>
         e.printStackTrace()
         Nil
     }

@@ -27,7 +27,9 @@ public class MainForm {
     public JRadioButton configurationSelection4;
     public JRadioButton configurationSelection5;
     public JRadioButton configurationSelection6;
-    public JButton startRemovableVerticesButton;
+    public JButton startRemovableVerticesTestButton;
+    public JButton selectGraphButtonRemovability;
+    public JButton startRemovablePairsOfVerticesTestButton;
 
     public void run() {
         JFrame frame = new JFrame("SnarkMaster");
@@ -113,9 +115,6 @@ public class MainForm {
         configurationSelection6.setSelected(true);
         configurationSelection6.setText("TH with (Angle,Cor)");
         panel3.add(configurationSelection6, new GridConstraints(3, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        startRemovableVerticesButton = new JButton();
-        startRemovableVerticesButton.setText("Removable vertices");
-        panel3.add(startRemovableVerticesButton, new GridConstraints(5, 1, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         coloringTestStatus = new JLabel();
         coloringTestStatus.setText("");
         panel3.add(coloringTestStatus, new GridConstraints(5, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
@@ -147,6 +146,28 @@ public class MainForm {
         transitionExistTestStatus = new JLabel();
         transitionExistTestStatus.setText("");
         panel5.add(transitionExistTestStatus, new GridConstraints(2, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JPanel panel6 = new JPanel();
+        panel6.setLayout(new GridLayoutManager(1, 1, new Insets(20, 20, 20, 20), 20, 20));
+        tabbedPane1.addTab("Removability", panel6);
+        final JPanel panel7 = new JPanel();
+        panel7.setLayout(new GridLayoutManager(4, 4, new Insets(0, 0, 0, 0), 10, 10));
+        panel6.add(panel7, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, true));
+        final JLabel label4 = new JLabel();
+        label4.setText("Graph:");
+        panel7.add(label4, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JLabel label5 = new JLabel();
+        label5.setRequestFocusEnabled(true);
+        label5.setText("");
+        panel7.add(label5, new GridConstraints(0, 1, 1, 2, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        selectGraphButtonRemovability = new JButton();
+        selectGraphButtonRemovability.setText("Select graph");
+        panel7.add(selectGraphButtonRemovability, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        startRemovableVerticesTestButton = new JButton();
+        startRemovableVerticesTestButton.setText("Vertices");
+        panel7.add(startRemovableVerticesTestButton, new GridConstraints(1, 1, 2, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        startRemovablePairsOfVerticesTestButton = new JButton();
+        startRemovablePairsOfVerticesTestButton.setText("Pairs of vertices");
+        panel7.add(startRemovablePairsOfVerticesTestButton, new GridConstraints(3, 1, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         logPane = new JScrollPane();
         logPane.setAutoscrolls(true);
         logPane.setVerticalScrollBarPolicy(22);

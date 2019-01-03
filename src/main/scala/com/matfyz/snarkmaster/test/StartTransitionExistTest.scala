@@ -10,6 +10,7 @@ case object StartTransitionExistTest extends StartComponentTestMessage {
       case ColoringExists(coloring, graph) =>
       //  println(coloring.mkString("\n"))
         Seq(TransitionExists(graph, configuration))
+      case _ => throw new Exception("implementation error")
     }
   }
 }

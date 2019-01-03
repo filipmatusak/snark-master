@@ -47,8 +47,11 @@ object LogActor{
       case TransitionDoesntExists(graph, _) =>
         "Graph " + graph.name + " has no transition"
 
-      case RemovableVertices(graph, _, vertices) =>
+      case RemovableVerticesTestResult(graph, _, vertices) =>
         s"Graph ${graph.name} has ${vertices.size} removable vertices: ${vertices.mkString(", ")}"
+
+      case RemovablePairOfVerticesTestResult(graph, _, pairs) =>
+        s"Graph ${graph.name} has ${pairs.size} removable pairs of vertices: ${pairs.mkString(", ")}"
     }
   }
 

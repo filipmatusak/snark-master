@@ -39,6 +39,10 @@ case class TransitionResult(graph: Graph,
                             edgeVertices: Seq[Int]) extends SnarkTestResult
 case class TransitionExists(graph: Graph, configuration: Configuration) extends SnarkTestResult
 case class TransitionDoesntExists(graph: Graph, configuration: Configuration) extends SnarkTestResult
-case class RemovableVertices(graph: Graph, configuration: Configuration, vertices: Seq[Int]) extends SnarkTestResult
+case class RemovableVerticesTestResult(graph: Graph, configuration: Configuration, vertices: Seq[Int]) extends SnarkTestResult
+
+case class RemovablePairOfVerticesTestResult(graph: Graph,
+                                             configuration: Configuration,
+                                             vertices: Seq[(Int, Int)]) extends SnarkTestResult
 
 

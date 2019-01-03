@@ -8,11 +8,11 @@
         <parameter value="-target:jvm-1.5" />
       </parameters>
     </profile>
-    <profile name="Gradle 3" modules="SnarkMaster_main,SnarkMaster_test">
+    <profile name="Gradle 2" modules="SnarkMaster_main,SnarkMaster_test">
       <option name="deprecationWarnings" value="true" />
       <option name="uncheckedWarnings" value="true" />
       <parameters>
-        <parameter value="-target:jvm-1.6" />
+        <parameter value="-target:jvm-1.8" />
       </parameters>
     </profile>
     <profile name="SBT 2" modules="scala-smtlib,root">

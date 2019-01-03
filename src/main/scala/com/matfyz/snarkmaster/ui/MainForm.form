@@ -122,14 +122,6 @@
                       <text value="TH with (Angle,Cor)"/>
                     </properties>
                   </component>
-                  <component id="77285" class="javax.swing.JButton" binding="startRemovableVerticesButton">
-                    <constraints>
-                      <grid row="5" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                    </constraints>
-                    <properties>
-                      <text value="Removable vertices"/>
-                    </properties>
-                  </component>
                   <component id="d2cc4" class="javax.swing.JLabel" binding="coloringTestStatus">
                     <constraints>
                       <grid row="5" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
@@ -213,6 +205,67 @@
                     </constraints>
                     <properties>
                       <text value=""/>
+                    </properties>
+                  </component>
+                </children>
+              </grid>
+            </children>
+          </grid>
+          <grid id="c4dc4" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="20" vgap="20">
+            <margin top="20" left="20" bottom="20" right="20"/>
+            <constraints>
+              <tabbedpane title="Removability"/>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <grid id="6546b" layout-manager="GridLayoutManager" row-count="4" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="10" vgap="10">
+                <margin top="0" left="0" bottom="0" right="0"/>
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="3" indent="0" use-parent-layout="true"/>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <component id="12d83" class="javax.swing.JLabel">
+                    <constraints>
+                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value="Graph:"/>
+                    </properties>
+                  </component>
+                  <component id="b085b" class="javax.swing.JLabel">
+                    <constraints>
+                      <grid row="0" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <requestFocusEnabled value="true"/>
+                      <text value=""/>
+                    </properties>
+                  </component>
+                  <component id="85d91" class="javax.swing.JButton" binding="selectGraphButtonRemovability">
+                    <constraints>
+                      <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value="Select graph"/>
+                    </properties>
+                  </component>
+                  <component id="ef329" class="javax.swing.JButton" binding="startRemovableVerticesTestButton">
+                    <constraints>
+                      <grid row="1" column="1" row-span="2" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value="Vertices"/>
+                    </properties>
+                  </component>
+                  <component id="3d89a" class="javax.swing.JButton" binding="startRemovablePairsOfVerticesTestButton">
+                    <constraints>
+                      <grid row="3" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value="Pairs of vertices"/>
                     </properties>
                   </component>
                 </children>

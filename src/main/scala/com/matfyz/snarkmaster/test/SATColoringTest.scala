@@ -50,7 +50,7 @@ object SATColoringTest extends SnarkColoringTest{
         case None => WithoutColoring(graph)
       }
     } catch {
-      case e => println(e.getMessage)
+      case e: Throwable => println(e.getMessage)
         e.printStackTrace()
         WithoutColoring(graph)
     }

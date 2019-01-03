@@ -2,27 +2,27 @@ package com.matfyz.snarkmaster.test
 
 import com.matfyz.snarkmaster.common.task
 import com.matfyz.snarkmaster.configuration.Configuration
-import com.matfyz.snarkmaster.graph.{Graph, Vertex}
+import com.matfyz.snarkmaster.graph.Graph
 import com.matfyz.snarkmaster.solver.LingelingSolver
 import com.matfyz.snarkmaster.test.SATColoringTest._
 import sat.formulas.{CNF, Var}
 
 case object StartRemovableVerticesTest extends StartTestMessage {
   override def start(graphs: Seq[Graph], configuration: Configuration) = {
-    StartRemovableVertices.test(graphs, configuration)
+    RemovableVerticesTest.test(graphs, configuration)
   }
 }
 
-object StartRemovableVertices extends SnarkRemovabilityTest{
+object RemovableVerticesTest extends SnarkRemovabilityTest{
   override def test(graph: Graph, configuration: Configuration): SnarkTestResult = {
 
     val tests = graph.vertices.keys.map { v =>
       task{
-        (v, testVertex(removeVertex(v, graph), configuration))
+        (v, testVertex(graph.removeVertex(v), configuration))
       }
     }.map(_.join())
 
-    RemovableVertices(graph, configuration, tests.filter(_._2).map(_._1).toSeq.sorted)
+    RemovableVerticesTestResult(graph, configuration, tests.filter(_._2).map(_._1).toSeq.sorted)
   }
 
   def testVertex(graph: Graph, configuration: Configuration): Boolean  = {
@@ -53,20 +53,9 @@ object StartRemovableVertices extends SnarkRemovabilityTest{
         case None => true
       }
     } catch {
-      case e =>
+      case e: Throwable =>
         e.printStackTrace()
         false
     }
-  }
-
-  def removeVertex(vertex: Int, graph: Graph): Graph = {
-    graph.copy(
-      vertices = graph.vertices.toSeq
-        .filter(_._1 != vertex)
-        .map(x => if(x._1 > vertex) x.copy(_1 = x._1 -1, _2 = x._2.copy(id = x._2.id-1)) else x).toMap,
-      edges = graph.edges
-        .filter(!_.vertices.map(_.id).contains(vertex))
-        .map( e => e.copy(vertices = e.vertices.map(x => if(x.id > vertex) x.copy(id = x.id -1) else x)))
-    )
   }
 }

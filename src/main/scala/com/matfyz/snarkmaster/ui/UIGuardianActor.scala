@@ -11,6 +11,7 @@ class UIGuardianActor(listener: ActorRef) extends Actor{
   val logActor = context.actorOf(Props(new LogActor(self, mainFrame)), LogActor.actorName)
   val coloringTabActor = context.actorOf(Props(new ColoringTabActor(self, mainFrame)), ColoringTabActor.actorName)
   val transitionsTabActor = context.actorOf(Props(new TransitionsTabActor(self, mainFrame)), TransitionsTabActor.actorName)
+  val removabilityTabActor = context.actorOf(Props(new RemovabilityTabActor(self, mainFrame)), RemovabilityTabActor.actorName)
 
   override def receive: Receive = {
     case m: LogMessage => logActor forward m
