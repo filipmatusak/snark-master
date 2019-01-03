@@ -16,15 +16,17 @@ case object StartRemovablePairOfVerticesTest extends StartTestMessage {
 object RemovablePairOfVerticesTest extends SnarkRemovabilityTest{
   override def test(graph: Graph, configuration: Configuration): SnarkTestResult = {
 
-    val vertexIndices = graph.vertices.keys.toSeq
+    val vertexIndices = graph.vertices.keys.toSeq.sorted
 
     val tests = {
       for {
         i <- vertexIndices.indices
         j <- (i + 1) until vertexIndices.size
       } yield {
-        val g1 = graph.removeVertex(i)
-        val g = if(j > i) g1.removeVertex(j-1) else g1.removeVertex(j)
+        val x = vertexIndices(i)
+        val y = vertexIndices(j)
+        val g1 = graph.removeVertex(x)
+        val g = if(y > x) g1.removeVertex(y-1) else g1.removeVertex(y)
         task ((vertexIndices(i), vertexIndices(j)), testGraph(g, configuration))
       }
     }.map(_.join())
