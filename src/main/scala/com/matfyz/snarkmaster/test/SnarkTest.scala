@@ -1,7 +1,7 @@
 package com.matfyz.snarkmaster.test
 
 import com.matfyz.snarkmaster.configuration.{Configuration, Point}
-import com.matfyz.snarkmaster.graph.{Component, Graph}
+import com.matfyz.snarkmaster.graph.{Component, Edge, Graph}
 
 trait StartTestMessage{
   def start(graphs: Seq[Graph], configuration: Configuration): Seq[SnarkTestResult]
@@ -40,9 +40,14 @@ case class TransitionResult(graph: Graph,
 case class TransitionExists(graph: Graph, configuration: Configuration) extends SnarkTestResult
 case class TransitionDoesntExists(graph: Graph, configuration: Configuration) extends SnarkTestResult
 case class RemovableVerticesTestResult(graph: Graph, configuration: Configuration, vertices: Seq[Int]) extends SnarkTestResult
+case class RemovableEdgesTestResult(graph: Graph, configuration: Configuration, edges: Seq[Edge]) extends SnarkTestResult
 
 case class RemovablePairOfVerticesTestResult(graph: Graph,
                                              configuration: Configuration,
                                              vertices: Seq[(Int, Int)]) extends SnarkTestResult
+
+case class RemovablePairOfEdgesTestResult(graph: Graph,
+                                          configuration: Configuration,
+                                          vertices: Seq[(Edge, Edge)]) extends SnarkTestResult
 
 

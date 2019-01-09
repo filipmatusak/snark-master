@@ -52,6 +52,18 @@ object LogActor{
 
       case RemovablePairOfVerticesTestResult(graph, _, pairs) =>
         s"Graph ${graph.name} has ${pairs.size} removable pairs of vertices: ${pairs.mkString(", ")}"
+
+      case RemovableEdgesTestResult(graph, _, edges) =>
+        val intEdges = edges.map(_.vertices.map(_.id).toSeq.sorted)
+          .map(x => (x(0), x(1)))
+          .sorted
+        s"Graph ${graph.name} has ${edges.size} removable edges: ${intEdges.mkString(", ")}"
+
+      case RemovablePairOfEdgesTestResult(graph, _, edges) =>
+        val intEdges = edges.map{case (e,f) => (e.vertices.map(_.id).toSeq.sorted , f.vertices.map(_.id).toSeq.sorted)}
+          .map{case (e,f) => s"[(${e(0)}, ${e(1)}), (${f(0)},${f(1)})]"}
+          .sorted
+        s"Graph ${graph.name} has ${edges.size} removable pairs of edges: ${intEdges.mkString(", ")}"
     }
   }
 

@@ -219,7 +219,7 @@
             <properties/>
             <border type="none"/>
             <children>
-              <grid id="6546b" layout-manager="GridLayoutManager" row-count="4" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="10" vgap="10">
+              <grid id="6546b" layout-manager="GridLayoutManager" row-count="6" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="10" vgap="10">
                 <margin top="0" left="0" bottom="0" right="0"/>
                 <constraints>
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="3" indent="0" use-parent-layout="true"/>
@@ -235,12 +235,13 @@
                       <text value="Graph:"/>
                     </properties>
                   </component>
-                  <component id="b085b" class="javax.swing.JLabel">
+                  <component id="b085b" class="javax.swing.JLabel" binding="graphInputRemovability">
                     <constraints>
                       <grid row="0" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
-                      <requestFocusEnabled value="true"/>
+                      <enabled value="true"/>
+                      <requestFocusEnabled value="false"/>
                       <text value=""/>
                     </properties>
                   </component>
@@ -252,20 +253,36 @@
                       <text value="Select graph"/>
                     </properties>
                   </component>
+                  <component id="3d89a" class="javax.swing.JButton" binding="startRemovablePairsOfVerticesTestButton">
+                    <constraints>
+                      <grid row="5" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value="Pairs of vertices"/>
+                    </properties>
+                  </component>
+                  <component id="37095" class="javax.swing.JButton" binding="startRemovableEdgesTestButton">
+                    <constraints>
+                      <grid row="1" column="3" row-span="4" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value="Edges"/>
+                    </properties>
+                  </component>
                   <component id="ef329" class="javax.swing.JButton" binding="startRemovableVerticesTestButton">
                     <constraints>
-                      <grid row="1" column="1" row-span="2" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                      <grid row="1" column="1" row-span="4" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
                       <text value="Vertices"/>
                     </properties>
                   </component>
-                  <component id="3d89a" class="javax.swing.JButton" binding="startRemovablePairsOfVerticesTestButton">
+                  <component id="9a8c3" class="javax.swing.JButton" binding="startRemovablePairsOfEdgesTestButton">
                     <constraints>
-                      <grid row="3" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                      <grid row="5" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
-                      <text value="Pairs of vertices"/>
+                      <text value="Pairs of edges"/>
                     </properties>
                   </component>
                 </children>

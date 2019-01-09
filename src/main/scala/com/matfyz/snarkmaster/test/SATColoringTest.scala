@@ -14,28 +14,7 @@ case object StartSatColoringTest extends StartTestMessage {
 object SATColoringTest extends SnarkColoringTest{
   def test(graph: Graph, configuration: Configuration) = {
     try {
-      val vertices = graph.getSize
-      val colors = configuration.colours
-
-      // matrix vertex x vertex x color
-      val edgeVars = (0 until vertices).map(i => (0 until vertices).map { j =>
-        if (graph.areNeighbour(i, j)) (0 until colors.size).map(c => Var(s"edge $i $j -> $c"))
-        else Nil
-      })
-
-      val allConditions = CNF(
-        additionalConditions(edgeVars, graph, configuration).clauses ++
-          symmetry(edgeVars).clauses ++
-          onePerEdge(edgeVars).clauses ++
-          uniquePerEdge(edgeVars).clauses ++
-          blocksConditions(edgeVars, configuration).clauses
-      )
-
-      val solver = new LingelingSolver()
-
-      val solved = solver.solve(edgeVars.flatMap(_.flatten).toSet, allConditions)
-
-      solved match {
+      tryToColor(graph, configuration) match {
         case Some(model) =>
           ColoringExists(
             model.map{ v =>
@@ -54,6 +33,31 @@ object SATColoringTest extends SnarkColoringTest{
         e.printStackTrace()
         WithoutColoring(graph)
     }
+  }
+
+  def tryToColor(graph: Graph, configuration: Configuration): Option[Set[Var]] = {
+    val vertices = graph.getSize
+    val colors = configuration.colours
+
+    // matrix vertex x vertex x color
+    val edgeVars = (0 until vertices).map(i => (0 until vertices).map { j =>
+      if (graph.areNeighbour(i, j)) (0 until colors.size).map(c => Var(s"edge $i $j -> $c"))
+      else Nil
+    })
+
+    val allConditions = CNF(
+      additionalConditions(edgeVars, graph, configuration).clauses ++
+        symmetry(edgeVars).clauses ++
+        onePerEdge(edgeVars).clauses ++
+        uniquePerEdge(edgeVars).clauses ++
+        blocksConditions(edgeVars, configuration).clauses
+    )
+
+    val solver = new LingelingSolver()
+
+    val solved = solver.solve(edgeVars.flatMap(_.flatten).toSet, allConditions)
+
+    solved
   }
 
   def additionalConditions(edgeVars: Seq[Seq[Seq[Var]]], graph: Graph, configuration: Configuration): CNF = {

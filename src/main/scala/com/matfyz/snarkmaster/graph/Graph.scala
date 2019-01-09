@@ -45,6 +45,10 @@ case class Graph(name: String,
         .map( e => e.copy(vertices = e.vertices.map(x => if(x.id > vertex) x.copy(id = x.id -1) else x)))
     )
   }
+
+  def removeEdge(edge: Edge): Graph = {
+    this.copy(edges = edges - edge)
+  }
 }
 
 case class Vertex(id: Int)

@@ -9,7 +9,7 @@ import com.matfyz.snarkmaster.configuration.Configuration
 import com.matfyz.snarkmaster.graph.Graph
 import com.matfyz.snarkmaster.model._
 import com.matfyz.snarkmaster.parser.format.TripleGraphFormat
-import com.matfyz.snarkmaster.test.{SnarkTestResult, StartRemovablePairOfVerticesTest, StartRemovableVerticesTest, StartSatColoringTest}
+import com.matfyz.snarkmaster.test._
 
 class RemovabilityTabActor(uIActor: ActorRef, mainForm: MainForm) extends Actor{
   var graphs: Seq[Graph] = Nil
@@ -17,10 +17,10 @@ class RemovabilityTabActor(uIActor: ActorRef, mainForm: MainForm) extends Actor{
   override def receive: Receive = LoggingReceive{
     case m: ParsedGraphs =>
       graphs = m.graphs
-      mainForm.graphInputName.setText(m.file.getName)
+      mainForm.graphInputRemovability.setText(m.file.getName)
       uIActor ! LogText("Parsed graphs from " + m.file.getName)
     case r: Seq[SnarkTestResult] =>
-      mainForm.coloringTestStatus.setText("")
+      //  mainForm.coloringTestStatus.setText("")
       uIActor ! LogResult(r)
     case _ =>
   }
@@ -53,6 +53,28 @@ class RemovabilityTabActor(uIActor: ActorRef, mainForm: MainForm) extends Actor{
         uIActor ! LogException("Select graph")
       } else {
         uIActor ! TestGraphs(graphs, configuration, Seq(StartRemovablePairOfVerticesTest))
+      }
+    }
+  })
+
+  mainForm.startRemovableEdgesTestButton.addActionListener(new ActionListener() {
+    def actionPerformed(e: ActionEvent): Unit = {
+      val configuration = Configuration.THConfiguration
+      if (graphs.isEmpty) {
+        uIActor ! LogException("Select graph")
+      } else {
+        uIActor ! TestGraphs(graphs, configuration, Seq(StartRemovableEdgesTest))
+      }
+    }
+  })
+
+  mainForm.startRemovablePairsOfEdgesTestButton.addActionListener(new ActionListener() {
+    def actionPerformed(e: ActionEvent): Unit = {
+      val configuration = Configuration.THConfiguration
+      if (graphs.isEmpty) {
+        uIActor ! LogException("Select graph")
+      } else {
+        uIActor ! TestGraphs(graphs, configuration, Seq(StartRemovablePairOfEdgesTest))
       }
     }
   })

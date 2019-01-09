@@ -4,22 +4,28 @@ import com.matfyz.snarkmaster.common.task
 import com.matfyz.snarkmaster.configuration.Configuration
 import com.matfyz.snarkmaster.graph.Graph
 
-case object StartRemovableVerticesTest extends StartTestMessage {
+case object StartRemovablePairOfEdgesTest extends StartTestMessage {
   override def start(graphs: Seq[Graph], configuration: Configuration) = {
-    RemovableVerticesTest.test(graphs, configuration)
+    RemovablePairOfEdgesTest.test(graphs, configuration)
   }
 }
 
-object RemovableVerticesTest extends SnarkRemovabilityTest{
+object RemovablePairOfEdgesTest extends SnarkRemovabilityTest {
   override def test(graph: Graph, configuration: Configuration): SnarkTestResult = {
 
-    val tests = graph.vertices.keys.map { v =>
-      task{
-        (v, runTest(graph.removeVertex(v), configuration))
+    val edges = graph.edges.toSeq
+
+    val tests = {
+      for {
+        i <- edges.indices
+        j <- (i+1) until edges.size
+      } yield {
+        val g = graph.removeEdge(edges(i)).removeEdge(edges(j))
+        task ((edges(i),edges(j)), runTest(g, configuration))
       }
     }.map(_.join())
 
-    RemovableVerticesTestResult(graph, configuration, tests.filter(_._2).map(_._1).toSeq.sorted)
+    RemovablePairOfEdgesTestResult(graph, configuration, tests.filter(_._2).map(_._1))
   }
 
   def runTest(graph: Graph, configuration: Configuration): Boolean  = {
