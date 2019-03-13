@@ -20,7 +20,7 @@ trait GraphFileFormat {
 }
 
 trait ComponentFileFormat {
-  def parse(file: File): Component = {
+  def parse(file: File): Seq[Component] = {
     val in = Source.fromFile(file)
 
     val lines = in.getLines()
@@ -28,5 +28,5 @@ trait ComponentFileFormat {
     parse(file, lines)
   }
 
-  def parse(file: File, lines: Iterator[String]): Component
+  def parse(file: File, lines: Iterator[String]): Seq[Component]
 }

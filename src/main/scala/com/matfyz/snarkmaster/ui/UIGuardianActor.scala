@@ -18,7 +18,7 @@ class UIGuardianActor(listener: ActorRef) extends Actor{
     case m: ParseGraph => listener forward m
     case m: ParseComponent => listener forward m
     case m: TestGraphs => listener forward m
-    case m: TestComponent => listener forward m
+    case m: TestComponents => listener forward m
   }
 }
 

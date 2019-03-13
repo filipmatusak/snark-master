@@ -7,8 +7,8 @@ import sat.formulas.CNF
 import sat.formulas._
 
 case object StartTransitionTest extends StartComponentTestMessage{
-  override def start(component: Component, configuration: Configuration): Seq[SnarkTestResult] = {
-    SATTransitionTest.findTransition(component, configuration)
+  override def start(components: Seq[Component], configuration: Configuration): Seq[SnarkTestResult] = {
+    components.flatMap(component => SATTransitionTest.findTransition(component, configuration))
   }
 }
 
@@ -54,7 +54,7 @@ object SATTransitionTest {
         task {
           val r = tryToColor(combinations(i), edgeVerices, baseConditions, edgeVars)
           result.update(i, r)
-          println(combinations(i) + " res = " + r)
+          //println(combinations(i) + " res = " + r)
         }
       }.foreach(_.join())
 

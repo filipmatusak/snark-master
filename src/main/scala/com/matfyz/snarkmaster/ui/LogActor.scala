@@ -36,8 +36,8 @@ object LogActor{
           coloring.sorted.map{ x => f"(${x._1}%3d, ${x._2}%3d) -> ${x._3}%3d"}.mkString("\t","\n\t","")
 
       case r: TransitionResult => "Graph " + r.graph.name + " has " + r.transitions.size + " transitions\n" +
-        "edge vertices are " + r.edgeVertices.mkString("(", ", ", ")") + "\n" +
-        r.rawTransitions.map(x=> x.map(_.id).mkString(", ")).sorted.mkString("\t","\n\t","\n") +
+       // "edge vertices are " + r.edgeVertices.mkString("(", ", ", ")") + "\n" +
+       // r.rawTransitions.map(x=> x.map(_.id).mkString(", ")).sorted.mkString("\t","\n\t","\n") +
         "edge vertices are " + r.edgeVertices.mkString("(", ", ", ")") + "\n" +
         r.transitions.map(x=> x.mkString(", ")).toSeq.sorted.mkString("\t","\n\t","\n")
 

@@ -22,11 +22,11 @@ trait SnarkRemovabilityTest {
 }
 
 trait StartComponentTestMessage{
-  def start(component: Component, configuration: Configuration): Seq[SnarkTestResult]
+  def start(components: Seq[Component], configuration: Configuration): Seq[SnarkTestResult]
 }
 
 trait SnarkTransitionTest {
-  def test(component: Component, configuration: Configuration): Seq[SnarkTestResult]
+  def test(components: Seq[Component], configuration: Configuration): Seq[SnarkTestResult]
 }
 
 sealed trait SnarkTestResult

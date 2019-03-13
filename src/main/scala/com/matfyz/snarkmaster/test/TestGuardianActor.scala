@@ -2,7 +2,7 @@ package com.matfyz.snarkmaster.test
 
 import akka.actor.{Actor, ActorRef}
 import akka.event.LoggingReceive
-import com.matfyz.snarkmaster.model.{LogText, TestComponent, TestGraphs}
+import com.matfyz.snarkmaster.model.{LogText, TestComponents, TestGraphs}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.{ExecutionContext, Future}
@@ -18,11 +18,11 @@ class TestGuardianActor(listener: ActorRef) extends Actor{
           originSender ! testResult
         }
       }
-    case TestComponent(component, configuration, tests) =>
+    case TestComponents(component, configuration, tests) =>
       val originSender = sender
       Future{
         tests.foreach{ test =>
-          listener ! LogText("Start test component: " + component.graph.name)
+          listener ! LogText("Start test component: " + component.head.graph.name)
           val testResult = test.start(component, configuration)
           originSender ! testResult
         }

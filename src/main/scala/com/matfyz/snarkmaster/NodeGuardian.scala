@@ -17,7 +17,7 @@ class NodeGuardian() extends Actor{
     case m: ParseGraph => graphParserActor forward m
     case m: ParseComponent => graphParserActor forward m
     case m: TestGraphs => testGuardianActor forward m
-    case m: TestComponent => testGuardianActor forward m
+    case m: TestComponents => testGuardianActor forward m
     case _ =>
   }
 

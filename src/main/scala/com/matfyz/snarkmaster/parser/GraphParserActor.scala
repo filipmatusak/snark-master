@@ -20,7 +20,7 @@ class GraphParserActor(listener: ActorRef) extends Actor{
     case ParseComponent(file, format) =>
       listener ! LogText("Start parsing file: " + file.getName)
       try {
-        sender ! ParsedComponent(format.parse(file), file)
+        sender ! ParsedComponents(format.parse(file), file)
       } catch {
         case ex: Exception =>
           listener ! LogException("Parsing error!", Some(ex))

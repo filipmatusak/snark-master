@@ -12,11 +12,11 @@ import com.matfyz.snarkmaster.parser.format.SimpleComponentFormat
 import com.matfyz.snarkmaster.test.{SnarkTestResult, StartTransitionExistTest, StartTransitionTest, TransitionResult}
 
 class TransitionsTabActor(uIActor: ActorRef, mainForm: MainForm) extends Actor{
-  var component: Option[Component] = None
+  var component: Option[Seq[Component]] = None
   var configuration: Option[Configuration] = Some(Configuration.THConfiguration)
 
   override def receive: Receive = LoggingReceive{
-    case m: ParsedComponent =>
+    case m: ParsedComponents =>
       component = Some(m.graphs)
       mainForm.inputComponentName.setText(m.file.getName)
       uIActor ! LogText("Parsed component from " + m.file.getName)
@@ -44,7 +44,7 @@ class TransitionsTabActor(uIActor: ActorRef, mainForm: MainForm) extends Actor{
       if(component.isEmpty) uIActor ! LogException("Select component")
       else if(configuration.isEmpty) uIActor ! LogException("Select configuration")
       else {
-        uIActor ! TestComponent(component.get, configuration.get, Seq(StartTransitionTest))
+        uIActor ! TestComponents(component.get, configuration.get, Seq(StartTransitionTest))
         mainForm.transitionTestStatus.setText("processing")
       }
     }
@@ -55,7 +55,7 @@ class TransitionsTabActor(uIActor: ActorRef, mainForm: MainForm) extends Actor{
       if(component.isEmpty) uIActor ! LogException("Select component")
       else if(configuration.isEmpty) uIActor ! LogException("Select configuration")
       else {
-        uIActor ! TestComponent(component.get, configuration.get, Seq(StartTransitionExistTest))
+        uIActor ! TestComponents(component.get, configuration.get, Seq(StartTransitionExistTest))
         mainForm.transitionExistTestStatus.setText("processing")
       }
     }
