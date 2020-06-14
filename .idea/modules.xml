@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/SnarkMaster.iml" filepath="$PROJECT_DIR$/.idea/modules/SnarkMaster.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/SnarkMaster.iml" filepath="$PROJECT_DIR$/.idea/modules/SnarkMaster.iml" group="SnarkMaster" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/SnarkMaster_main.iml" filepath="$PROJECT_DIR$/.idea/modules/SnarkMaster_main.iml" group="SnarkMaster" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/SnarkMaster_test.iml" filepath="$PROJECT_DIR$/.idea/modules/SnarkMaster_test.iml" group="SnarkMaster" />
     </modules>
